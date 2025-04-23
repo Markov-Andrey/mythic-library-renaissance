@@ -24,12 +24,28 @@
 </template>
 
 <script setup>
+import {onMounted, ref} from 'vue';
+import ky from 'ky';
 import WorldCard from '../components/WorldCard.vue';
 
-const worlds = [
-  { id: 1, name: 'Blood & Chrome', cover_image_path: 'storage/worlds/kAoC3uOj5RW23a71XkSgSa5UwJQTnA0HigyNmap6.jpg' },
-];
+const worlds = ref([]);
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+
+const fetchWorlds = async () => {
+  try {
+    worlds.value = await ky.get(`${apiBaseUrl}/worlds`).json();
+  } catch (error) {
+    console.error('Ошибка при получении данных:', error);
+  }
+};
+
+onMounted(() => {
+  fetchWorlds();
+});
 </script>
+
+<style scoped>
+</style>
 
 <style scoped>
 </style>
