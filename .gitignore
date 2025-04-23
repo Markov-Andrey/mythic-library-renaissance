@@ -1,2 +1,4 @@
 /storage/*
 /.env
+/backend/db/mythic_library.db
+/backend/venv
