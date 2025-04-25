@@ -9,10 +9,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@3d-dice/dice-box": "^1.1.4",
+    "@3d-dice/dice-ui": "^0.5.2",
+    "@3d-dice/fui": "^0.3.4",
     "@tailwindcss/vite": "^4.1.4",
+    "cannon-es": "^0.20.0",
     "flowbite": "^3.1.2",
     "flowbite-vue": "^0.2.1",
     "ky": "^1.8.1",
+    "three": "^0.176.0",
     "vue": "^3.5.13",
     "vue-router": "^4.5.0"
   },
