@@ -23,7 +23,7 @@ const handleSubmit = async () => {
 
   try {
     const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
-    await ky.post(`${apiBaseUrl}/worlds_add`, {
+    await ky.post(`${apiBaseUrl}/api/worlds_add`, {
       body: formData,
     }).json();
     await router.push('/');

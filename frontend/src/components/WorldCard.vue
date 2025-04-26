@@ -24,7 +24,7 @@
 
     <img
       v-if="world.cover_image_path && showImage"
-      :src="world.cover_image_path"
+      :src="`${apiBaseUrl}/${world.cover_image_path}`"
       alt="World Cover"
       class="w-full h-56 object-cover rounded-t-xl"
       @error="hideImage"
@@ -50,8 +50,9 @@ const props = defineProps({
 const router = useRouter()
 const showImage = ref(true)
 const menuOpen = ref(false)
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
-const goToWorldDetails = () => router.push({ name: 'world-details', params: { id: props.world.id } })
+const goToWorldDetails = () => router.push(`/world/${props.world.id}`);
 const editWorld = () => console.log(`Edit world with ID: ${props.world.id}`)
 const deleteWorld = () => console.log(`Delete world with ID: ${props.world.id}`)
 const hideImage = () => showImage.value = false

@@ -21,6 +21,25 @@ async def get_worlds():
     return [dict(row) for row in rows]
 
 
+@router.get("/api/worlds/{id}")
+async def get_world(id: int):
+    conn = get_db_connection()
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT * FROM worlds WHERE id = ?
+        """,
+        (id,)
+    )
+    world = cursor.fetchone()
+    conn.close()
+
+    if world:
+        return dict(world)
+
+
 @router.post("/api/worlds_add")
 async def add_world(
     name: str = Form(...),

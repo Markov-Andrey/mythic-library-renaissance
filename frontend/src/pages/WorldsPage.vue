@@ -34,7 +34,7 @@ const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const fetchWorlds = async () => {
   try {
-    worlds.value = await ky.get(`${apiBaseUrl}/worlds`).json();
+    worlds.value = await ky.get(`${apiBaseUrl}/api/worlds`).json();
   } catch (error) {
     console.error('Ошибка при получении данных:', error);
   }
