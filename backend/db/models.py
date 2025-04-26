@@ -10,10 +10,8 @@ class World(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True, nullable=False)  # Имя мира (обязательное поле)
-    short_description = Column(String)  # Краткое описание
-    full_description = Column(Text)  # Полное описание
+    description = Column(String)  # Краткое описание
     visual_style = Column(String)  # Визуальный стиль (для рисовалки)
-    genre = Column(Text, nullable=False)  # Сеттинг (обязательное поле)
     tags = Column(String)  # Теги (для поиска, можно хранить как строку)
     cover_image_path = Column(String)  # Обложка
 

@@ -1,4 +1,5 @@
 import os
+import sqlite3
 import uuid
 from fastapi import APIRouter, UploadFile, File, Form
 from backend.db.db import get_db_connection
@@ -11,21 +12,20 @@ os.makedirs(STORAGE_DIR, exist_ok=True)
 @router.get("/api/worlds")
 async def get_worlds():
     conn = get_db_connection()
+    conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
-    cursor.execute("SELECT id, name, cover_image_path FROM worlds")
+    cursor.execute("SELECT * FROM worlds")
     rows = cursor.fetchall()
     conn.close()
 
-    return [{"id": row[0], "name": row[1], "cover_image_path": row[2]} for row in rows]
+    return [dict(row) for row in rows]
 
 
 @router.post("/api/worlds_add")
 async def add_world(
     name: str = Form(...),
-    short_description: str = Form(...),
-    full_description: str = Form(...),
+    description: str = Form(...),
     visual_style: str = Form(...),
-    genre: str = Form(...),
     tags: str = Form(...),
     cover_image_path: UploadFile = File(...)
 ):
@@ -44,17 +44,14 @@ async def add_world(
     cursor.execute(
         """
         INSERT INTO worlds (
-            name, short_description, full_description, 
-            visual_style, genre, tags, cover_image_path
+            name, description, visual_style, tags, cover_image_path
         ) 
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?)
         """,
         (
             name,
-            short_description,
-            full_description,
+            description,
             visual_style,
-            genre,
             tags,
             db_path
         )
