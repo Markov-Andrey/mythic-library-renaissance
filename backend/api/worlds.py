@@ -2,7 +2,7 @@ import os
 import sqlite3
 import uuid
 from fastapi import APIRouter, UploadFile, File, Form
-from backend.db.db import get_db_connection
+from backend.db.database import get_db_connection
 
 router = APIRouter()
 STORAGE_DIR = "storage/worlds"
