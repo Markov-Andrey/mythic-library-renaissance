@@ -23,7 +23,7 @@
     </div>
 
     <img
-      v-if="showImage"
+      v-if="world.cover_image_path && showImage"
       :src="world.cover_image_path"
       alt="World Cover"
       class="w-full h-56 object-cover rounded-t-xl"

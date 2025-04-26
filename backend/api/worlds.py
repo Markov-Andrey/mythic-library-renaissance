@@ -27,17 +27,20 @@ async def add_world(
     description: str = Form(...),
     visual_style: str = Form(...),
     tags: str = Form(...),
-    cover_image_path: UploadFile = File(...)
+    cover_image_path: UploadFile = File(None)
 ):
-    ext = os.path.splitext(cover_image_path.filename)[1]
-    filename = f"{uuid.uuid4().hex}{ext}"
-    file_path = os.path.join(STORAGE_DIR, filename)
+    db_path = None
 
-    with open(file_path, "wb") as buffer:
-        content = await cover_image_path.read()
-        buffer.write(content)
+    if cover_image_path:
+        ext = os.path.splitext(cover_image_path.filename)[1]
+        filename = f"{uuid.uuid4().hex}{ext}"
+        file_path = os.path.join(STORAGE_DIR, filename)
 
-    db_path = f"/{file_path.replace(os.sep, '/')}"
+        with open(file_path, "wb") as buffer:
+            content = await cover_image_path.read()
+            buffer.write(content)
+
+        db_path = f"/{file_path.replace(os.sep, '/')}"
 
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -59,4 +62,4 @@ async def add_world(
     conn.commit()
     conn.close()
 
-    return {"message": "World add"}
+    return {"message": "World added"}
