@@ -17,7 +17,7 @@ const routes = [
     component: WorldsAddPage,
   },
   {
-    path: '/world/:id',
+    path: '/:id',
     name: 'world',
     component: WorldPage,
   },

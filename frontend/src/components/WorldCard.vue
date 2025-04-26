@@ -52,7 +52,7 @@ const showImage = ref(true)
 const menuOpen = ref(false)
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
-const goToWorldDetails = () => router.push(`/world/${props.world.id}`);
+const goToWorldDetails = () => router.push(`/${props.world.id}`);
 const editWorld = () => console.log(`Edit world with ID: ${props.world.id}`)
 const deleteWorld = () => console.log(`Delete world with ID: ${props.world.id}`)
 const hideImage = () => showImage.value = false
