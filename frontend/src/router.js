@@ -7,6 +7,7 @@ import LocationsPage from '@/pages/LocationsPage.vue';
 import LocationPage from '@/pages/LocationPage.vue';
 import OrganizationsPage from '@/pages/OrganizationsPage.vue';
 import TestPage from '@/pages/TestPage.vue';
+import OrganizationPage from "@/pages/OrganizationPage.vue";
 
 const routes = [
   {
@@ -35,10 +36,14 @@ const routes = [
     component: OrganizationsPage,
   },
   {
+    path: '/:worldId/organizations/:organizationId',
+    name: 'organization',
+    component: OrganizationPage,
+  },
+  {
     path: '/:worldId/locations/:locationId',
     name: 'location',
     component: LocationPage,
-    props: route => ({ worldId: route.params.worldId, locationId: route.params.locationId })
   },
   {
     path: '/test',
