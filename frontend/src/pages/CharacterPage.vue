@@ -38,10 +38,11 @@ onMounted(() => {
             {{ character.description }}
           </p>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-600">
-            <p><strong>Возраст:</strong> {{ character.age ?? 'Не указано' }}</p>
-            <p><strong>Пол:</strong> {{ character.gender ?? 'Не указано' }}</p>
-            <p><strong>Раса:</strong> {{ character.race ?? 'Не указано' }}</p>
-            <p><strong>Класс:</strong> {{ character.character_class ?? 'Не указано' }}</p>
+            <p><strong>Тип:</strong> {{ character.type ?? '-' }}</p>
+            <p><strong>Возраст:</strong> {{ character.age ?? '-' }}</p>
+            <p><strong>Пол:</strong> {{ character.gender ?? '-' }}</p>
+            <p><strong>Раса:</strong> {{ character.race ?? '-' }}</p>
+            <p><strong>Класс:</strong> {{ character.character_class ?? '-' }}</p>
             <p>
               <strong>Статус: </strong>
               <span :class="character.status ? 'text-green-600' : 'text-red-600'">

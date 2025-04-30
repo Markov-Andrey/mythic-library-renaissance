@@ -11,6 +11,7 @@ class Character(Base):
     name = Column(String, nullable=False)
     photo_path = Column(String, nullable=True)
     description = Column(Text, nullable=True)
+    type = Column(Text, nullable=True)
     age = Column(Integer, nullable=True)
     gender = Column(String, nullable=True)
     race = Column(String, nullable=True)
