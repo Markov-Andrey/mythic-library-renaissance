@@ -26,6 +26,3 @@ class Location(Base):
     @images.setter
     def images(self, value):
         self.images_json = json.dumps(value)
-
-    def __repr__(self):
-        return f"<Location(name={self.name}, world_id={self.world_id})>"

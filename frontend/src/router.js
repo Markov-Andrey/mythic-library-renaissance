@@ -6,6 +6,7 @@ import WorldPage from '@/pages/WorldPage.vue';
 import LocationsPage from '@/pages/LocationsPage.vue';
 import LocationPage from '@/pages/LocationPage.vue';
 import OrganizationsPage from '@/pages/OrganizationsPage.vue';
+import CharactersPage from '@/pages/CharactersPage.vue';
 import TestPage from '@/pages/TestPage.vue';
 import OrganizationPage from "@/pages/OrganizationPage.vue";
 
@@ -39,6 +40,11 @@ const routes = [
     path: '/:worldId/organizations/:organizationId',
     name: 'organization',
     component: OrganizationPage,
+  },
+  {
+    path: '/:id/characters',
+    name: 'characters',
+    component: CharactersPage,
   },
   {
     path: '/:worldId/locations/:locationId',

@@ -11,6 +11,3 @@ class World(Base):
     visual_style = Column(String)
     tags = Column(String)
     cover_image_path = Column(String)
-
-    def __repr__(self):
-        return f"<World(name={self.name}, description={self.description})>"

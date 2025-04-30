@@ -15,6 +15,3 @@ class Organization(Base):
     logo_image_path = Column(String, nullable=True)
 
     world = relationship("World", backref="organizations")
-
-    def __repr__(self):
-        return f"<Organization(name={self.name}, status={self.status}, world_id={self.world_id})>"

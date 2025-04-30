@@ -8,6 +8,11 @@ const showImage = ref(true);
 const route = useRoute();
 const worldId = route.params.id;
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
+const links = [
+  { name: 'Локации', route: `/${worldId}/locations` },
+  { name: 'Организации', route: `/${worldId}/organizations` },
+  { name: 'Персонажи', route: `/${worldId}/characters` },
+];
 
 const fetchWorld = async () => {
   try {
@@ -46,16 +51,12 @@ onMounted(() => {
 
         <div class="mt-6 space-y-1 font-bold">
           <router-link
-            :to="`/${worldId}/locations`"
-            class="block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+            v-for="link in links"
+            :key="link.route"
+            :to="link.route"
+            class="block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-400"
           >
-            Локации
-          </router-link>
-          <router-link
-            :to="`/${worldId}/organizations`"
-            class="block px-4 py-2 bg-orange-400 text-white rounded hover:bg-orange-500"
-          >
-            Организации
+            {{ link.name }}
           </router-link>
         </div>
       </div>
