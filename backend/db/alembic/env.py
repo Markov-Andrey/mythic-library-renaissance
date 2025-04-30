@@ -8,6 +8,7 @@ from alembic import context
 from backend.db.database import Base
 from backend.db.models import World
 from backend.db.models import Location
+from backend.db.models import Organization
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
