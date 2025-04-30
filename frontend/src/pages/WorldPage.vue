@@ -12,6 +12,7 @@ const links = [
   { name: 'Локации', route: `/${worldId}/locations` },
   { name: 'Организации', route: `/${worldId}/organizations` },
   { name: 'Персонажи', route: `/${worldId}/characters` },
+  { name: 'Предметы', route: `/${worldId}/items` },
 ];
 
 const fetchWorld = async () => {
