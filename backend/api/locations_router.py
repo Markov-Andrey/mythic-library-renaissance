@@ -6,16 +6,29 @@ router = APIRouter()
 
 
 @router.get("/api/worlds/{world_id}/locations")
-async def get_locations_by_world(world_id: int):
+async def get_locations_tree(world_id: int):
     conn = get_db_connection()
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
-
-    cursor.execute("SELECT * FROM locations WHERE world_id = ?", (world_id,))
+    cursor.execute("SELECT id, name, parent_location_id FROM locations WHERE world_id = ?", (world_id,))
     rows = cursor.fetchall()
     conn.close()
 
     if not rows:
-        raise HTTPException(status_code=404, detail="Locations not found")
+        raise HTTPException(status_code=404, detail="No locations found")
 
-    return [dict(row) for row in rows]
+    all_locations = {row["id"]: {"id": row["id"], "name": row["name"], "children": []} for row in rows}
+
+    tree = []
+    for row in rows:
+        location = all_locations[row["id"]]
+        parent_id = row["parent_location_id"]
+
+        if parent_id is None:
+            tree.append(location)
+        else:
+            parent = all_locations.get(parent_id)
+            if parent:
+                parent["children"].append(location)
+
+    return tree
