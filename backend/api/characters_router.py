@@ -25,3 +25,22 @@ async def get_characters_by_world(world_id: int):
 
     return [dict(row) for row in rows]
 
+
+@router.get("/api/worlds/{world_id}/characters/{character_id}")
+async def get_character_by_id(world_id: int, character_id: int):
+    conn = get_db_connection()
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT * FROM characters
+        WHERE id = ? AND world_id = ?
+    """, (character_id, world_id))
+
+    row = cursor.fetchone()
+    conn.close()
+
+    if not row:
+        raise HTTPException(status_code=404, detail="Character not found")
+
+    return dict(row)
