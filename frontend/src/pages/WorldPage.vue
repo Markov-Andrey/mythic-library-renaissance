@@ -43,10 +43,22 @@ onMounted(() => {
         <p><strong>Описание:</strong> {{ world.description || 'Нет описания' }}</p>
         <p><strong>Визуальный стиль:</strong> {{ world.visual_style || 'Не задано' }}</p>
         <p><strong>Теги:</strong> {{ world.tags || 'Нет тегов' }}</p>
+
+        <div class="mt-6 space-y-1 font-bold">
+          <router-link
+            :to="`/${worldId}/locations`"
+            class="block px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+          >
+            Локации
+          </router-link>
+          <router-link
+            :to="`/${worldId}/organizations`"
+            class="block px-4 py-2 bg-orange-400 text-white rounded hover:bg-orange-500"
+          >
+            Организации
+          </router-link>
+        </div>
       </div>
-    </div>
-    <div v-else class="text-center text-gray-500">
-      <p>Загружается информация...</p>
     </div>
   </div>
 </template>
