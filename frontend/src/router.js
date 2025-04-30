@@ -4,6 +4,7 @@ import WorldsPage from '@/pages/WorldsPage.vue';
 import WorldsAddPage from '@/pages/WorldsAddPage.vue';
 import WorldPage from '@/pages/WorldPage.vue';
 import LocationsPage from '@/pages/LocationsPage.vue';
+import LocationPage from '@/pages/LocationPage.vue';
 import TestPage from '@/pages/TestPage.vue';
 
 const routes = [
@@ -26,6 +27,12 @@ const routes = [
     path: '/:id/locations',
     name: 'locations',
     component: LocationsPage,
+  },
+  {
+    path: '/:worldId/locations/:locationId',
+    name: 'location',
+    component: LocationPage,
+    props: route => ({ worldId: route.params.worldId, locationId: route.params.locationId })
   },
   {
     path: '/test',
