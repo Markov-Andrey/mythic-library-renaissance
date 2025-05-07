@@ -11,6 +11,7 @@ import TestPage from '@/pages/TestPage.vue';
 import OrganizationPage from "@/pages/OrganizationPage.vue";
 import CharacterPage from "@/pages/CharacterPage.vue";
 import ItemsPage from "@/pages/ItemsPage.vue";
+import WorldTestPage from "@/pages/WorldTestPage.vue";
 
 const routes = [
   {
@@ -67,6 +68,11 @@ const routes = [
     path: '/test',
     name: 'test',
     component: TestPage,
+  },
+  {
+    path: '/w-test',
+    name: 'w-test',
+    component: WorldTestPage,
   },
 ];
 
