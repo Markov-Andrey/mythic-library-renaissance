@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import HexElement from "@/components/HexElement.vue";
 import { terrainColors } from "@/utils/terrain";
 import { generateGrid, getCellStyle } from "@/utils/terrainGenerator";
+import IconCastle from "@/icons/IconCastle.vue";
 
 const cols = 25, rows = 15;
 const h = 50;
@@ -21,21 +22,25 @@ const style = ({x, y}) => getCellStyle(x, y, w, oy);
   <div class="flex gap-10 p-4">
     <div class="relative" :style="{ width: `${cols * w}px`, height: `${rows * oy + h * 0.25}px` }">
       <div
-          v-for="cell in grid"
-          :key="`${cell.x}-${cell.y}`"
-          class="absolute"
-          :style="style(cell)"
-          :data-x="cell.x"
-          :data-y="cell.y"
-          @mouseenter="hoveredCoords = cell"
-          @mouseleave="hoveredCoords = null"
+        v-for="cell in grid"
+        :key="`${cell.x}-${cell.y}`"
+        class="absolute"
+        :style="style(cell)"
+        :data-x="cell.x"
+        :data-y="cell.y"
+        @mouseenter="hoveredCoords = cell"
+        @mouseleave="hoveredCoords = null"
       >
-        <HexElement :class="terrainColors[cell.type]"/>
+        <HexElement :class="terrainColors[cell.type]" />
+        <!--
+          <IconCastle />
+        -->
       </div>
     </div>
 
     <button
-        class="bg-blue-400 h-20 w-40 rounded-lg text-white font-semibold text-lg shadow-sm hover:bg-blue-500 active:bg-blue-600 active:scale-95 transition-all duration-150 cursor-pointer">
+      class="bg-blue-400 h-20 w-40 rounded-lg text-white font-semibold text-lg shadow-sm hover:bg-blue-500 active:bg-blue-600 active:scale-95 transition-all duration-150 cursor-pointer"
+    >
       Тик
     </button>
 
