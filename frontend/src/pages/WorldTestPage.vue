@@ -1,107 +1,19 @@
 <script setup>
 import { ref } from 'vue';
 import HexElement from "@/components/HexElement.vue";
+import { terrainColors } from "@/utils/terrain";
+import { generateGrid, getCellStyle } from "@/utils/terrainGenerator";
 
-const cols = 10, rows = 10;
+const cols = 25, rows = 15;
 const h = 50;
 const w = h * 0.866;
 const oy = h * 0.75;
+const seed = Math.random().toString(36).substring(2, 12);
+const biome = "continental";
 
 const hoveredCoords = ref(null);
-
-const terrainTypes = ['meadow', 'forest', 'swamp', 'mountain', 'desert', 'water', 'savanna'];
-const terrainColors = {
-  meadow: 'fill-[#A8E6A1]',
-  forest: 'fill-[#6BBF59]',
-  mountain: 'fill-[#B0A7A3]',
-  desert: 'fill-[#F0C28C]',
-  water: 'fill-[#A4D8F7]',
-  swamp: 'fill-[#6B8E23]',
-  savanna: 'fill-[#D4C86C]',
-};
-/*
-Biome     | Fertility | Humidity | Temperature | Plant Biomass
---------------------------------------------------------------
-forest    |   80–100  |   60–80  |    50–70    |     80–100
-meadow    |   50–100  |   30–80  |    50–70    |     40–80
-swamp     |   60–100  |   90–100 |    50–60    |     70–90
-water     |   0–10    |   100    |    50–70    |     10–20
-savanna   |   30–60   |   30–50  |    60–80    |     30–50
-desert    |   10–20   |   0–20   |    70–100   |     5–15
-mountain  |   20–40   |   20–40  |    30–50    |     10–20
- */
-const generateParams = (type) => {
-  switch (type) {
-    case 'meadow':
-      return {
-        fertility: Math.floor(Math.random() * 51) + 50,
-        humidity: Math.floor(Math.random() * 51) + 30,
-        temperature: Math.floor(Math.random() * 21) + 50,
-        plantBiomass: Math.floor(Math.random() * 41) + 40
-      };
-    case 'forest':
-      return {
-        fertility: Math.floor(Math.random() * 21) + 80,
-        humidity: Math.floor(Math.random() * 21) + 60,
-        temperature: Math.floor(Math.random() * 21) + 50,
-        plantBiomass: Math.floor(Math.random() * 21) + 80
-      };
-    case 'swamp':
-      return {
-        fertility: Math.floor(Math.random() * 41) + 60,
-        humidity: Math.floor(Math.random() * 11) + 90,
-        temperature: Math.floor(Math.random() * 11) + 50,
-        plantBiomass: Math.floor(Math.random() * 21) + 70
-      };
-    case 'mountain':
-      return {
-        fertility: Math.floor(Math.random() * 21) + 20,
-        humidity: Math.floor(Math.random() * 21) + 20,
-        temperature: Math.floor(Math.random() * 21) + 30,
-        plantBiomass: Math.floor(Math.random() * 11) + 10
-      };
-    case 'desert':
-      return {
-        fertility: Math.floor(Math.random() * 11) + 10,
-        humidity: Math.floor(Math.random() * 21),
-        temperature: Math.floor(Math.random() * 31) + 70,
-        plantBiomass: Math.floor(Math.random() * 11) + 5
-      };
-    case 'water':
-      return {
-        fertility: Math.floor(Math.random() * 11),
-        humidity: 100,
-        temperature: Math.floor(Math.random() * 21) + 50,
-        plantBiomass: Math.floor(Math.random() * 11) + 10
-      };
-    case 'savanna':
-      return {
-        fertility: Math.floor(Math.random() * 31) + 30,
-        humidity: Math.floor(Math.random() * 21) + 30,
-        temperature: Math.floor(Math.random() * 21) + 60,
-        plantBiomass: Math.floor(Math.random() * 21) + 30
-      };
-    default:
-      return {};
-  }
-};
-
-// Генерация сетки с типами местности и их параметрами
-const grid = Array.from({ length: cols * rows }, (_, i) => {
-  const y = Math.floor(i / cols);
-  const x = i % cols;
-  const type = terrainTypes[Math.floor(Math.random() * terrainTypes.length)];
-  return { x, y, type, params: generateParams(type) };
-});
-
-// Стиль для клетки
-const style = ({x, y}) => ({
-  width: `${w}px`,
-  height: `${h}px`,
-  left: `${x * w}px`,
-  top: `${y * oy}px`,
-  transform: y % 2 ? `translateX(${w / 2}px)` : "none",
-});
+const grid = generateGrid(cols, rows, seed, biome);
+const style = ({x, y}) => getCellStyle(x, y, w, oy);
 </script>
 
 <template>
