@@ -9,6 +9,7 @@ const h = 50;
 const w = h * 0.866;
 const oy = h * 0.75;
 const seed = Math.random().toString(36).substring(2, 12);
+// const seed = 'Andre';
 const biome = "continental";
 
 const hoveredCoords = ref(null);

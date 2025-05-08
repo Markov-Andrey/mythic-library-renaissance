@@ -26,14 +26,14 @@ export const terrainColors = {
 export const globalBiomes = {
   continental: [
   'meadow',
+  'meadow',
+  'meadow',
   'forest_coniferous',
   'forest_deciduous',
   'forest_mixed',
   'swamp',
   'mountain',
-  'desert',
   'water',
-  'savanna',
   ]
 };
 
