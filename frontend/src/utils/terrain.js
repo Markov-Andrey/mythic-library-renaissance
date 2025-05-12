@@ -1,9 +1,7 @@
 // terrain.js
 export const terrainTypes = [
   'meadow',
-  'forest_coniferous',
-  'forest_deciduous',
-  'forest_mixed',
+  'forest',
   'swamp',
   'mountain',
   'desert',
@@ -13,9 +11,7 @@ export const terrainTypes = [
 
 export const terrainColors = {
   meadow: 'fill-[#A8E6A1]',
-  forest_coniferous: 'fill-[#4C8C4A]',
-  forest_deciduous: 'fill-[#6BBF59]',
-  forest_mixed: 'fill-[#589E63]',
+  forest: 'fill-[#589E63]',
   mountain: 'fill-[#B0A7A3]',
   desert: 'fill-[#F0C28C]',
   water: 'fill-[#A4D8F7]',
@@ -28,9 +24,8 @@ export const globalBiomes = {
   'meadow',
   'meadow',
   'meadow',
-  'forest_coniferous',
-  'forest_deciduous',
-  'forest_mixed',
+  'forest',
+  'forest',
   'swamp',
   'mountain',
   'water',
