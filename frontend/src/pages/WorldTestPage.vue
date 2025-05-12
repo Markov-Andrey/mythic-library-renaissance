@@ -74,11 +74,14 @@ function handleMouseLeave() {
       </div>
     </div>
 
-    <button
-      class="bg-blue-400 h-20 w-40 rounded-lg text-white font-semibold text-lg shadow-sm hover:bg-blue-500 active:bg-blue-600 active:scale-95 transition-all duration-150 cursor-pointer"
-    >
-      Тик
-    </button>
+    <div>
+      <button
+        class="bg-blue-400 h-20 w-40 rounded-lg text-white font-semibold text-lg shadow-sm hover:bg-blue-500 active:bg-blue-600 active:scale-95 transition-all duration-150 cursor-pointer"
+      >
+        Тик
+      </button>
+      <div>{{seed}}</div>
+    </div>
 
     <div
       v-if="hoveredCoords"
