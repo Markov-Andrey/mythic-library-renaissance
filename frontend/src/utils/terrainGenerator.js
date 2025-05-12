@@ -1,9 +1,7 @@
 // terrainGenerator.js
 import { globalBiomes, terrainTypes, generateParams } from "@/utils/terrain";
-import seedrandom from 'seedrandom';
 
-export function generateGrid(cols, rows, seed, biome = 'temperate_forest') {
-  const rng = seedrandom(seed);
+export function generateGrid(cols, rows, rng, biome = 'temperate_forest') {
   const allowedTypes = globalBiomes[biome] || terrainTypes;
   return Array.from({ length: cols * rows }, (_, i) => {
     const y = Math.floor(i / cols);

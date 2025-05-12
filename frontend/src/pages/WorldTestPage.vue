@@ -5,6 +5,7 @@ import { terrainColors } from "@/utils/terrain";
 import { generateGrid, getCellStyle } from "@/utils/terrainGenerator";
 import { POI_TYPES } from "@/utils/poi.js";
 import { generatePOIsWithRules } from "@/utils/poiGenerator";
+import seedrandom from "seedrandom";
 
 const cols = 25, rows = 15;
 const h = 50;
@@ -12,13 +13,14 @@ const w = h * 0.866;
 const oy = h * 0.75;
 const seed = Math.random().toString(36).substring(2, 12);
 const biome = "continental";
+const rng = seedrandom(seed);
 
 const hoveredCoords = ref(null);
 
-const grid = generateGrid(cols, rows, seed, biome);
+const grid = generateGrid(cols, rows, rng, biome);
 const style = ({ x, y }) => getCellStyle(x, y, w, oy);
 
-const pois = generatePOIsWithRules(grid, POI_TYPES);
+const pois = generatePOIsWithRules(grid, POI_TYPES, rng);
 const poiMap = new Map(pois.map(p => [`${p.x},${p.y}`, p]));
 
 function handleMouseEnter(cell) {
@@ -63,7 +65,7 @@ function handleMouseLeave() {
         @mouseenter="handleMouseEnter(cell)"
         @mouseleave="handleMouseLeave"
       >
-        <HexElement :class="terrainColors[cell.type]" />
+        <HexElement :class="`fill-[${terrainColors[cell.type]}]`" />
         <component
           v-if="poiMap.has(`${cell.x},${cell.y}`)"
           :is="poiMap.get(`${cell.x},${cell.y}`).poi.icon"

@@ -1,13 +1,17 @@
 // src/utils/poiGenerator.js
-export function generatePOIsWithRules(grid, poiTypes) {
+
+export function generatePOIsWithRules(grid, poiTypes, rng) {
   const result = [];
   const forbidden = new Set();
 
-  const distance = (a, b) => Math.max(Math.abs(a.x - b.x), Math.abs(a.y - b.y)); // гексагоны
+  const distance = (a, b) => Math.max(Math.abs(a.x - b.x), Math.abs(a.y - b.y));
+  const totalCells = grid.length;
 
   for (const poi of poiTypes) {
     const candidates = grid.filter(cell => poi.allowedTerrains.includes(cell.type));
-    const shuffled = [...candidates].sort(() => Math.random() - 0.5);
+    const shuffled = [...candidates].sort(() => rng() - 0.5);
+
+    const count = Math.floor(poi.density / 100 * totalCells);
     let placed = 0;
 
     for (const cell of shuffled) {
@@ -21,7 +25,7 @@ export function generatePOIsWithRules(grid, poiTypes) {
       forbidden.add(key);
 
       placed++;
-      if (placed >= poi.count) break;
+      if (placed >= count) break;
     }
   }
 
