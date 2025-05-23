@@ -36,7 +36,7 @@ onMounted(() => {
             :name="location.name"
           />
         </div>
-        <NewCardAdd :to="`locations/locations-add`"/>
+        <NewCardAdd :to="`locations-add`"/>
       </div>
     </div>
   </div>

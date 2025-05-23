@@ -12,6 +12,7 @@ class Organization(Base):
     description = Column(Text, nullable=True)
     status = Column(Boolean, default=True)
     tags = Column(String, nullable=True)
-    logo_image_path = Column(String, nullable=True)
+    cover = Column(String, nullable=True)
+    images_json = Column(Text, default='[]')
 
     world = relationship("World", backref="organizations")

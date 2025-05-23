@@ -26,6 +26,10 @@ props.fields.forEach(field => {
     }
   }
 
+  if (field.type === 'checkbox') {
+    values[field.name] = field.default ?? false;
+  }
+
   if (['image', 'images'].includes(field.type)) {
     files[field.name] = null;
   }
@@ -49,7 +53,11 @@ const handleSubmit = async () => {
         }
       }
     } else {
-      formData.append(field.name, values[field.name]);
+      let value = values[field.name];
+      if (typeof value === 'boolean') {
+        value = value ? 'true' : 'false';
+      }
+      formData.append(field.name, value);
     }
   }
 
@@ -70,7 +78,12 @@ const handleSubmit = async () => {
       :key="field.name"
       v-show="!field.hidden"
     >
-      <label v-if="!field.hidden" class="block mb-1 font-semibold">{{ field.label }}</label>
+      <label
+        v-if="field.type !== 'checkbox' && !field.hidden"
+        class="block mb-1 font-semibold"
+      >
+        {{ field.label }}
+      </label>
 
       <input
         v-if="field.type === 'text' || field.type === 'number'"
@@ -119,11 +132,33 @@ const handleSubmit = async () => {
           {{ option.name }}
         </option>
       </select>
+
+      <label
+        v-else-if="field.type === 'checkbox'"
+        class="inline-flex items-center gap-2 cursor-pointer"
+      >
+        <input
+          type="checkbox"
+          v-model="values[field.name]"
+          class="w-5 h-5 text-blue-600 border-gray-300 rounded"
+        />
+        {{ field.label }}
+      </label>
     </div>
 
     <div class="flex justify-between mt-6">
-      <router-link to="/" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600">Отмена</router-link>
-      <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Сохранить</button>
+      <router-link
+        to="/"
+        class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
+      >
+        Отмена
+      </router-link>
+      <button
+        type="submit"
+        class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+      >
+        Сохранить
+      </button>
     </div>
   </form>
 </template>

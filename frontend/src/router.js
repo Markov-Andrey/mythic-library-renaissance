@@ -12,6 +12,7 @@ import OrganizationPage from "@/pages/OrganizationPage.vue";
 import CharacterPage from "@/pages/CharacterPage.vue";
 import ItemsPage from "@/pages/ItemsPage.vue";
 import LocationsAddPage from "@/pages/LocationsAddPage.vue";
+import OrganisationsAddPage from "@/pages/OrganisationsAddPage.vue";
 
 const routes = [
   {
@@ -43,6 +44,11 @@ const routes = [
     path: '/:worldId/organizations/:organizationId',
     name: 'organization',
     component: OrganizationPage,
+  },
+  {
+    path: '/:worldId/organizations/organizations-add',
+    name: 'organizations-add',
+    component: OrganisationsAddPage,
   },
   {
     path: '/:id/characters',

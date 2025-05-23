@@ -12,9 +12,7 @@ async def get_organizations_by_world(world_id: int):
     cursor = conn.cursor()
 
     cursor.execute("""
-        SELECT id, name, status, logo_image_path, world_id
-        FROM organizations
-        WHERE world_id = ?
+        SELECT * FROM organizations WHERE world_id = ?
     """, (world_id,))
 
     rows = cursor.fetchall()
