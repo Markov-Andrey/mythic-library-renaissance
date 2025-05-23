@@ -20,6 +20,17 @@ async def get_locations(world_id: int):
     return rows
 
 
+@router.get("/api/worlds/{world_id}/locations_array")
+async def get_locations(world_id: int):
+    rows = query_all(
+        "SELECT id, name FROM locations WHERE world_id = ?",
+        (world_id,)
+    )
+    if not rows:
+        raise HTTPException(status_code=404, detail="No locations found")
+    return rows
+
+
 @router.get("/api/worlds/{world_id}/locations/{location_id}")
 async def get_location(world_id: int, location_id: int):
     row = query_one(
@@ -38,6 +49,7 @@ def add_location(
         description: str = Form(...),
         type: Optional[str] = Form(None),
         tags: Optional[str] = Form(None),
+        parent_location_id: Optional[int] = Form(None),
         cover: Optional[UploadFile] = File(None),
         images_json: Optional[List[UploadFile]] = File(None)
 ):
@@ -49,6 +61,7 @@ def add_location(
         "tags": tags,
         "cover": None,
         "images_json": "[]",
+        "parent_location_id": parent_location_id
     }
 
     if cover:

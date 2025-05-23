@@ -15,6 +15,17 @@ const files = reactive({});
 props.fields.forEach(field => {
   const isMultipleImage = field.type === 'images';
   values[field.name] = field.default ?? (isMultipleImage ? [] : '');
+
+  if (field.type === 'select') {
+    if (field.default !== undefined) {
+      values[field.name] = field.default;
+    } else if (field.options && field.options.length > 0) {
+      values[field.name] = field.options[0].id;
+    } else {
+      values[field.name] = '';
+    }
+  }
+
   if (['image', 'images'].includes(field.type)) {
     files[field.name] = null;
   }
@@ -93,6 +104,21 @@ const handleSubmit = async () => {
         @change="e => handleFileChange(e, field.name, true)"
         class="w-full"
       />
+
+      <select
+        v-else-if="field.type === 'select'"
+        v-model="values[field.name]"
+        :required="field.required"
+        class="w-full p-2 border border-gray-300 rounded-md"
+      >
+        <option
+          v-for="option in field.options"
+          :key="option.id"
+          :value="option.id"
+        >
+          {{ option.name }}
+        </option>
+      </select>
     </div>
 
     <div class="flex justify-between mt-6">
