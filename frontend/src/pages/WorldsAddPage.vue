@@ -1,9 +1,9 @@
 <script setup>
-  import AddFormPage from "@/pages/AddFormPage.vue";
+  import AddFormElement from "../components/AddFormElement.vue";
 </script>
 
 <template>
-  <AddFormPage
+  <AddFormElement
     :fields="[
       { name: 'name', label: 'Имя мира', type: 'text', required: true },
       { name: 'description', label: 'Описание мира', type: 'textarea' },

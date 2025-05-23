@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute } from 'vue-router';
-import AddFormPage from "@/pages/AddFormPage.vue";
+import AddFormElement from "../components/AddFormElement.vue";
 import ky from "ky";
 import { onMounted, ref, computed } from "vue";
 
@@ -34,7 +34,7 @@ const fields = computed(() => [
 </script>
 
 <template>
-  <AddFormPage
+  <AddFormElement
     :fields="fields"
     api-route="/api/location_add"
     :success-redirect="`/${worldId}/locations`"
