@@ -1,69 +1,72 @@
 <template>
-  <div id="dice-container">
-    <button @click="rollDice" id="roll-button">Roll Dice</button>
+  <div class="flex gap-6 items-start">
+    <div
+      id="dice-container"
+      class="w-[400px] h-[400px] border border-gray-300 flex-shrink-0"
+    ></div>
+    <div class="flex flex-col gap-4 w-44">
+      <input
+        id="dice-input"
+        type="text"
+        v-model="diceInput"
+        class="border border-gray-300 rounded px-3 py-2 text-base"
+      />
+      <button
+        @click="rollDice"
+        id="roll-button"
+        class="bg-green-600 text-white rounded px-4 py-2 text-base hover:bg-green-700 transition"
+      >
+        Roll Dice
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
-import { onMounted, ref } from 'vue';
-import DiceBox from '@3d-dice/dice-box';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+import DiceBox from '@3d-dice/dice-box-threejs';
 
 export default {
   setup() {
-    const diceBoxRef = ref(null);
+    const diceInput = ref('3d20');
     let diceBoxInstance = null;
 
-    onMounted(() => {
-      diceBoxInstance = new DiceBox(diceBoxRef.value, {
-        assetPath: '/assets/',
-        scale: 10,
-      });
+    onMounted(async () => {
+  diceBoxInstance = new DiceBox('#dice-container', {
+    light_intensity: 1,
+    gravity_multiplier: 300,
+    baseScale: 80,
+    strength: 4,
+    theme_customColorset: {
+      background: "#ffdc9f",
+      foreground: "#000000",
+      texture: "none",
+      material: "plastic"
+    },
+    onRollComplete: (results) => {
+      const allValues = results.sets.flatMap(set => set.rolls.map(r => r.value));
+      const total = allValues.reduce((a, b) => a + b, 0);
+      const formula = allValues.join('+');
+      console.log(`${formula}=${total}`);
+    }
+  });
 
-      diceBoxInstance.init().then(() => {
-        console.log('DiceBox initialized');
-      }).catch((error) => {
-        console.error('Error initializing DiceBox:', error);
-      });
+  await diceBoxInstance.initialize();
+});
+
+    onBeforeUnmount(() => {
+      diceBoxInstance?.dispose();
+      diceBoxInstance = null;
     });
 
     const rollDice = () => {
-      if (diceBoxInstance) {
-        diceBoxInstance.roll("5d20").then((results) => {
-          const values = results.map(result => result.value);
-          const rollString = values.join(' + ');
-          const sum = values.reduce((acc, val) => acc + val, 0);
-          console.log(`Roll results: ${rollString} = ${sum}`);
-        }).catch((error) => {
-          console.error('Error during roll:', error);
-        });
-      } else {
-        console.error('DiceBox is not initialized yet.');
-      }
+      diceBoxInstance.roll(diceInput.value.trim());
     };
 
-    return {
-      diceBoxRef,
-      rollDice
-    };
-  }
+    return { diceInput, rollDice };
+  },
 };
 </script>
 
 <style>
-#roll-button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-}
-.dice-box-canvas {
-  width: 50%;
-  height: 50%;
-  background-size: cover;
-  border: 1px solid #ccc;
-}
 </style>
