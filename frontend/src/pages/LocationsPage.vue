@@ -2,7 +2,8 @@
 import {onMounted, ref} from 'vue';
 import {useRoute} from 'vue-router';
 import ky from 'ky';
-import LocationElement from '../components/LocationElement.vue';
+import NewCardAdd from "@/components/NewCardAdd.vue";
+import MiniCard from "@/components/MiniCard.vue";
 
 const locations = ref([]);
 const route = useRoute();
@@ -24,17 +25,19 @@ onMounted(() => {
 
 <template>
   <div class="min-h-screen bg-gray-50 text-gray-800">
-    <div class="w-full max-w-5xl px-4 py-6 mx-auto">
-      <h1 class="text-3xl font-bold mb-4">Иерархия локаций</h1>
-      <div v-if="locations.length">
-        <LocationElement
-            v-for="location in locations"
-            :key="location.id"
-            :location="location"
-            :worldId="worldId"
-        />
+    <div class="w-full max-w-7xl px-2 py-2 mx-auto">
+      <h1 class="text-4xl font-bold text-gray-900">Locations</h1>
+      <hr class="p-1">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <div v-for="location in locations">
+          <MiniCard
+            :to="`locations/${location.id}`"
+            :cover="location.cover"
+            :name="location.name"
+          />
+        </div>
+        <NewCardAdd to="/locations-add"/>
       </div>
-      <div v-else class="text-gray-500">Нет локаций</div>
     </div>
   </div>
 </template>

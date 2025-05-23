@@ -4,8 +4,8 @@
     @click="goToWorldDetails"
   >
     <img
-      v-if="world.cover_image_path && showImage"
-      :src="`${apiBaseUrl}/${world.cover_image_path}`"
+      v-if="world.cover && showImage"
+      :src="`${apiBaseUrl}/${world.cover}`"
       alt="World Cover"
       class="w-full h-56 object-cover rounded-t-xl"
       @error="hideImage"

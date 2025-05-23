@@ -4,14 +4,14 @@
       <h1 class="text-4xl font-bold text-gray-900">Worlds Library</h1>
       <hr class="p-1">
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-
-        <WorldCard
-          v-for="world in worlds"
-          :key="world.id"
-          :world="world"
-        />
+        <div v-for="world in worlds">
+          <MiniCard
+            :to="`/${world.id}`"
+            :cover="world.cover"
+            :name="world.name"
+          />
+        </div>
         <NewCardAdd to="/worlds-add"/>
-
       </div>
     </div>
   </div>
@@ -22,6 +22,7 @@ import {onMounted, ref} from 'vue';
 import ky from 'ky';
 import WorldCard from '../components/WorldsCard.vue';
 import NewCardAdd from '../components/NewCardAdd.vue';
+import MiniCard from "@/components/MiniCard.vue";
 
 const worlds = ref([]);
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;

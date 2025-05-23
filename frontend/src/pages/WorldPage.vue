@@ -35,10 +35,10 @@ onMounted(() => {
 <template>
   <div class="p-6 bg-gray-100 rounded-xl shadow-md max-w-7xl mx-auto mt-6">
     <div v-if="world" class="flex space-x-8">
-      <div v-if="world.cover_image_path" class="w-1/3">
+      <div v-if="world.cover" class="w-1/3">
         <img
           v-if="showImage"
-          :src="`${apiBaseUrl}/${world.cover_image_path}`"
+          :src="`${apiBaseUrl}/${world.cover}`"
           alt="World Cover"
           class="w-full h-auto object-cover rounded-xl"
           @error="hideImage"

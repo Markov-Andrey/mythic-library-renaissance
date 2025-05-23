@@ -10,6 +10,7 @@ class Location(Base):
     id = Column(Integer, primary_key=True, index=True)
     world_id = Column(Integer, ForeignKey('worlds.id'), nullable=False)
     name = Column(String, index=True, nullable=False)
+    cover = Column(String)
     description = Column(Text)
     type = Column(String)
     tags = Column(String)

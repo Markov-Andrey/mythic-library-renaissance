@@ -10,4 +10,4 @@ class World(Base):
     description = Column(String)
     visual_style = Column(String)
     tags = Column(String)
-    cover_image_path = Column(String)
+    cover = Column(String)
