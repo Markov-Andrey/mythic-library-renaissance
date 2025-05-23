@@ -12,9 +12,7 @@ async def get_characters_by_world(world_id: int):
     cursor = conn.cursor()
 
     cursor.execute("""
-        SELECT id, name, status, photo_path, world_id
-        FROM characters
-        WHERE world_id = ?
+        SELECT * FROM characters WHERE world_id = ?
     """, (world_id,))
 
     rows = cursor.fetchall()
