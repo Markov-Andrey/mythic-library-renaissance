@@ -20,7 +20,6 @@
 <script setup>
 import {onMounted, ref} from 'vue';
 import ky from 'ky';
-import WorldCard from '../components/WorldsCard.vue';
 import NewCardAdd from '../components/NewCardAdd.vue';
 import MiniCard from "@/components/MiniCard.vue";
 
