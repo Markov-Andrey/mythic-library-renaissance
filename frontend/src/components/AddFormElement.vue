@@ -147,12 +147,12 @@ const handleSubmit = async () => {
     </div>
 
     <div class="flex justify-between mt-6">
-      <router-link
-        to="/"
+      <button
+        @click="router.back()"
         class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
       >
-        Отмена
-      </router-link>
+        Назад
+      </button>
       <button
         type="submit"
         class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"

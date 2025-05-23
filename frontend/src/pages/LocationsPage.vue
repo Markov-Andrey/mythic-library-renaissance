@@ -4,6 +4,7 @@ import {useRoute} from 'vue-router';
 import ky from 'ky';
 import NewCardAdd from "@/components/NewCardAdd.vue";
 import MiniCard from "@/components/MiniCard.vue";
+import {w} from "@3d-dice/dice-box/dist/Dice.js";
 
 const locations = ref([]);
 const route = useRoute();
@@ -36,7 +37,7 @@ onMounted(() => {
             :name="location.name"
           />
         </div>
-        <NewCardAdd :to="`locations-add`"/>
+        <NewCardAdd :to="`/${worldId}/locations/locations-add`"/>
       </div>
     </div>
   </div>

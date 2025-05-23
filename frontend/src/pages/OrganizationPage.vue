@@ -1,51 +1,75 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import {onMounted, ref} from 'vue';
+import {useRoute} from 'vue-router';
 import ky from 'ky';
 
-const organization = ref(null);
 const route = useRoute();
-const organizationId = route.params.organizationId;
 const worldId = route.params.worldId;
+const organizationId = route.params.organizationId;
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
-const fetchOrganization = async () => {
+const organization = ref(null);
+const showCover = ref(true);
+const images = ref([]);
+
+const fetchLocation = async () => {
   try {
-    organization.value = await ky.get(`${apiBaseUrl}/api/worlds/${worldId}/organizations/${organizationId}`).json();
+    organization.value = await ky
+        .get(`${apiBaseUrl}/api/worlds/${worldId}/organizations/${organizationId}`)
+        .json();
+
+    if (organization.value.images_json) {
+      try {
+        images.value = JSON.parse(organization.value.images_json) || [];
+      } catch (error) {
+        console.error('Error parsing images JSON:', error);
+        images.value = [];
+      }
+    }
   } catch (err) {
-    console.error('Error fetching organization:', err);
+    console.error('Error fetching location:', err);
   }
 };
 
+const hideCover = () => {
+  showCover.value = false;
+};
+
 onMounted(() => {
-  fetchOrganization();
+  fetchLocation();
 });
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50 text-gray-800">
-    <div class="w-full max-w-5xl px-4 py-6 mx-auto">
-      <div v-if="organization">
-        <div class="flex flex-col items-center">
-          <img
-            v-if="organization.logo_image_path"
-            :src="`${apiBaseUrl}/${organization.logo_image_path}`"
-            alt="Organization Logo"
-            class="w-32 h-32 object-cover rounded-full mb-4"
-          />
-          <h1 class="text-4xl font-bold mb-4">{{ organization.name }}</h1>
-          <p v-if="organization.description" class="text-lg mb-4">{{ organization.description }}</p>
-          <p class="text-sm text-gray-500">
-            Статус:
-            <span :class="organization.status ? 'text-green-600' : 'text-red-600'">
-              {{ organization.status ? 'Активна' : 'Неактивна' }}
-            </span>
-          </p>
-          <p v-if="organization.tags" class="text-sm mt-2">
-            Теги: <span>{{ organization.tags }}</span>
-          </p>
-        </div>
+  <div class="max-w-3xl mx-auto mt-8 p-6 bg-white rounded shadow">
+    <div v-if="organization">
+      <div v-if="organization.cover && showCover" class="mb-6">
+        <img
+            :src="`${apiBaseUrl}/${organization.cover}`"
+            alt="Location Cover"
+            class="rounded w-full max-h-[300px] object-cover"
+            @error="hideCover"
+        />
+      </div>
+
+      <h1 class="text-3xl font-bold mb-4">{{ organization.name }}</h1>
+      <p class="mb-2"><strong>Type:</strong> {{ organization.type || 'N/A' }}</p>
+      <p class="mb-2"><strong>Tags:</strong> {{ organization.tags || 'None' }}</p>
+      <p class="mb-4"><strong>Description:</strong> {{ organization.description || 'No description available' }}</p>
+
+      <div v-if="images.length" class="grid grid-cols-2 gap-4">
+        <img
+            v-for="(img, index) in images"
+            :key="index"
+            :src="`${apiBaseUrl}/${img}`"
+            alt="Location image"
+            class="rounded w-full max-h-64 object-cover"
+            loading="lazy"
+        />
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+</style>

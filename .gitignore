@@ -2,7 +2,5 @@ __pycache__
 *.py[cod]
 *.pyo
 
-/storage/*
 /frontend/.env
-/backend/db/mythic_library.db
 /backend/venv
