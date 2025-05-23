@@ -11,6 +11,7 @@ import TestPage from '@/pages/TestPage.vue';
 import OrganizationPage from "@/pages/OrganizationPage.vue";
 import CharacterPage from "@/pages/CharacterPage.vue";
 import ItemsPage from "@/pages/ItemsPage.vue";
+import LocationsAddPage from "@/pages/LocationsAddPage.vue";
 
 const routes = [
   {
@@ -62,6 +63,11 @@ const routes = [
     path: '/:worldId/locations/:locationId',
     name: 'location',
     component: LocationPage,
+  },
+  {
+    path: '/:worldId/locations/locations-add',
+    name: 'locations-add',
+    component: LocationsAddPage,
   },
   {
     path: '/test',

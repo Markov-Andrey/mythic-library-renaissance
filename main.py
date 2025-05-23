@@ -8,6 +8,7 @@ import importlib
 load_dotenv()
 
 static_dir = os.path.join(os.path.dirname(__file__), "frontend", "dist")
+storage_dir = os.path.join(os.path.dirname(__file__), "storage")
 
 app = FastAPI()
 
@@ -29,6 +30,7 @@ for filename in os.listdir(api_dir):
         if hasattr(module, 'router'):
             app.include_router(module.router)
 
+app.mount("/storage", StaticFiles(directory=storage_dir), name="storage")
 app.mount("/", StaticFiles(directory=static_dir, html=True), name="static")
 
 if __name__ == "__main__":
