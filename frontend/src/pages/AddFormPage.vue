@@ -12,14 +12,10 @@ const props = defineProps({
 const values = reactive({});
 const files = reactive({});
 
-// Инициализация значений по умолчанию
 props.fields.forEach(field => {
-  const isMultipleImage = field.type === 'images[]';
-
-  // default значение
+  const isMultipleImage = field.type === 'images';
   values[field.name] = field.default ?? (isMultipleImage ? [] : '');
-
-  if (['image', 'images[]'].includes(field.type)) {
+  if (['image', 'images'].includes(field.type)) {
     files[field.name] = null;
   }
 });
@@ -32,7 +28,7 @@ const handleSubmit = async () => {
   const formData = new FormData();
 
   for (const field of props.fields) {
-    if (['image', 'images[]'].includes(field.type)) {
+    if (['image', 'images'].includes(field.type)) {
       const file = files[field.name];
       if (file) {
         if (Array.isArray(file)) {
@@ -90,7 +86,7 @@ const handleSubmit = async () => {
       />
 
       <input
-        v-else-if="field.type === 'images[]'"
+        v-else-if="field.type === 'images'"
         type="file"
         multiple
         accept="image/*"
