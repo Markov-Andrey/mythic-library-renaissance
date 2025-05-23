@@ -38,21 +38,21 @@ onMounted(() => {
             {{ character.description }}
           </p>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-600">
-            <p><strong>Тип:</strong> {{ character.type ?? '-' }}</p>
-            <p><strong>Возраст:</strong> {{ character.age ?? '-' }}</p>
-            <p><strong>Пол:</strong> {{ character.gender ?? '-' }}</p>
-            <p><strong>Раса:</strong> {{ character.race ?? '-' }}</p>
-            <p><strong>Класс:</strong> {{ character.character_class ?? '-' }}</p>
+            <p><strong>Type:</strong> {{ character.type ?? '-' }}</p>
+            <p><strong>Age:</strong> {{ character.age ?? '-' }}</p>
+            <p><strong>Gender:</strong> {{ character.gender ?? '-' }}</p>
+            <p><strong>Race:</strong> {{ character.race ?? '-' }}</p>
+            <p><strong>Class:</strong> {{ character.character_class ?? '-' }}</p>
             <p>
-              <strong>Статус: </strong>
+              <strong>Status: </strong>
               <span :class="character.status ? 'text-green-600' : 'text-red-600'">
-                {{ character.status ? 'Активен' : 'Неактивен' }}
+                {{ character.status ? 'Alive' : 'Dead' }}
               </span>
             </p>
           </div>
         </div>
       </div>
-      <div v-else class="text-center text-gray-500 mt-8">Персонаж не найден.</div>
+      <div v-else class="text-center text-gray-500 mt-8">Character not found.</div>
     </div>
   </div>
 </template>
