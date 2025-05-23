@@ -53,9 +53,9 @@ onMounted(() => {
       </div>
 
       <h1 class="text-3xl font-bold mb-4">{{ organization.name }}</h1>
-      <p class="mb-2"><strong>Type:</strong> {{ organization.type || 'N/A' }}</p>
       <p class="mb-2"><strong>Tags:</strong> {{ organization.tags || 'None' }}</p>
       <p class="mb-4"><strong>Description:</strong> {{ organization.description || 'No description available' }}</p>
+      <p class="mb-4"><strong>Status:</strong> {{ organization.status ? 'Activity' : 'No activity' }}</p>
 
       <div v-if="images.length" class="grid grid-cols-2 gap-4">
         <img
