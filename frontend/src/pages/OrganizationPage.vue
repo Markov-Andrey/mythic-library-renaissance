@@ -1,6 +1,6 @@
 <script setup>
-import {onMounted, ref} from 'vue';
-import {useRoute} from 'vue-router';
+import { onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
 import ky from 'ky';
 
 const route = useRoute();
@@ -12,7 +12,7 @@ const organization = ref(null);
 const showCover = ref(true);
 const images = ref([]);
 
-const fetchLocation = async () => {
+const fetchOrganization = async () => {
   try {
     organization.value = await ky
         .get(`${apiBaseUrl}/api/worlds/${worldId}/organizations/${organizationId}`)
@@ -27,7 +27,7 @@ const fetchLocation = async () => {
       }
     }
   } catch (err) {
-    console.error('Error fetching location:', err);
+    console.error('Error fetching organization:', err);
   }
 };
 
@@ -36,40 +36,56 @@ const hideCover = () => {
 };
 
 onMounted(() => {
-  fetchLocation();
+  fetchOrganization();
 });
 </script>
 
 <template>
-  <div class="max-w-3xl mx-auto mt-8 p-6 bg-white rounded shadow">
-    <div v-if="organization">
-      <div v-if="organization.cover && showCover" class="mb-6">
-        <img
-            :src="`${apiBaseUrl}/${organization.cover}`"
-            alt="Location Cover"
-            class="rounded w-full max-h-[300px] object-cover"
-            @error="hideCover"
-        />
+  <div class="min-h-screen bg-gray-100 py-10 px-4 text-gray-800">
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
+
+      <div v-if="organization" class="flex flex-col sm:flex-row gap-6">
+        <div class="flex-shrink-0" v-if="organization.cover && showCover">
+          <img
+              :src="`${apiBaseUrl}/${organization.cover}`"
+              alt="Organization Cover"
+              class="w-48 h-48 object-cover rounded-lg shadow"
+              @error="hideCover"
+          />
+        </div>
+
+        <div class="flex-1 space-y-4">
+          <h1 class="text-3xl font-bold text-gray-900">{{ organization.name }}</h1>
+          <p class="text-gray-600 whitespace-pre-line" v-if="organization.description">
+            {{ organization.description }}
+          </p>
+          <p v-else class="text-gray-500 italic">Описание отсутствует.</p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-sm text-gray-700">
+            <p><strong>Теги:</strong> {{ organization.tags || '-' }}</p>
+            <p><strong>Статус:</strong> {{ organization.status ? 'Активна' : 'Неактивна' }}</p>
+          </div>
+        </div>
       </div>
 
-      <h1 class="text-3xl font-bold mb-4">{{ organization.name }}</h1>
-      <p class="mb-2"><strong>Tags:</strong> {{ organization.tags || 'None' }}</p>
-      <p class="mb-4"><strong>Description:</strong> {{ organization.description || 'No description available' }}</p>
-      <p class="mb-4"><strong>Status:</strong> {{ organization.status ? 'Activity' : 'No activity' }}</p>
-
-      <div v-if="images.length" class="grid grid-cols-2 gap-4">
-        <img
-            v-for="(img, index) in images"
-            :key="index"
-            :src="`${apiBaseUrl}/${img}`"
-            alt="Location image"
-            class="rounded w-full max-h-64 object-cover"
-            loading="lazy"
-        />
+      <div v-if="images.length" class="mt-8">
+        <h2 class="text-xl font-semibold mb-4">Gallery</h2>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          <img
+              v-for="(img, index) in images"
+              :key="index"
+              :src="`${apiBaseUrl}/${img}`"
+              alt="Organization image"
+              class="rounded w-full max-h-48 object-cover"
+              loading="lazy"
+          />
+        </div>
       </div>
+
+      <div v-if="!organization" class="text-center text-gray-500 mt-8">
+        Организация не найдена.
+      </div>
+
     </div>
   </div>
 </template>
-
-<style scoped>
-</style>
