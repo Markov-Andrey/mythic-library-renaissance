@@ -34,10 +34,7 @@ onMounted(() => {
             class="w-32 h-32 object-cover rounded-full mb-4"
           />
           <h1 class="text-4xl font-bold mb-4">{{ character.name }}</h1>
-          <p v-if="character.description" class="text-lg mb-4 text-center whitespace-pre-line">
-            {{ character.description }}
-          </p>
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-600">
+          <div class="grid grid-cols-2 gap-4 text-sm text-gray-600 py-5">
             <p><strong>Type:</strong> {{ character.type ?? '-' }}</p>
             <p><strong>Age:</strong> {{ character.age ?? '-' }}</p>
             <p><strong>Gender:</strong> {{ character.gender ?? '-' }}</p>
@@ -50,6 +47,9 @@ onMounted(() => {
               </span>
             </p>
           </div>
+          <p v-if="character.description" class="text-lg mb-4 text-center whitespace-pre-line">
+            {{ character.description }}
+          </p>
         </div>
       </div>
       <div v-else class="text-center text-gray-500 mt-8">Character not found.</div>
