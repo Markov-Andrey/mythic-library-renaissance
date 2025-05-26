@@ -23,36 +23,45 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50 text-gray-800">
-    <div class="w-full max-w-5xl px-4 py-6 mx-auto">
-      <div v-if="character">
-        <div class="flex flex-col items-center">
+  <div class="min-h-screen bg-gray-100 py-10 px-4 text-gray-800">
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
+      <div v-if="character" class="flex flex-col sm:flex-row gap-6">
+        <div class="flex-shrink-0">
           <img
             v-if="character.photo_path"
             :src="`${apiBaseUrl}/${character.photo_path}`"
             alt="Character Photo"
-            class="w-32 h-32 object-cover rounded-full mb-4"
+            class="w-40 h-40 object-cover rounded-lg shadow"
           />
-          <h1 class="text-4xl font-bold mb-4">{{ character.name }}</h1>
-          <div class="grid grid-cols-2 gap-4 text-sm text-gray-600 py-5">
-            <p><strong>Type:</strong> {{ character.type ?? '-' }}</p>
-            <p><strong>Age:</strong> {{ character.age ?? '-' }}</p>
-            <p><strong>Gender:</strong> {{ character.gender ?? '-' }}</p>
-            <p><strong>Race:</strong> {{ character.race ?? '-' }}</p>
-            <p><strong>Class:</strong> {{ character.character_class ?? '-' }}</p>
+        </div>
+
+        <div class="flex-1 space-y-4">
+          <div>
+            <h1 class="text-3xl font-bold text-gray-900">{{ character.name }}</h1>
+            <p v-if="character.description" class="mt-2 text-gray-600 whitespace-pre-line">
+              {{ character.description }}
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-sm">
+            <p><strong class="text-gray-500">Тип: </strong>{{ character.type ?? '-' }}</p>
+            <p><strong class="text-gray-500">Возраст: </strong>{{ character.age ?? '-' }}</p>
+            <p><strong class="text-gray-500">Пол: </strong>{{ character.gender ?? '-' }}</p>
+            <p><strong class="text-gray-500">Раса: </strong>{{ character.race ?? '-' }}</p>
+            <p><strong class="text-gray-500">Класс: </strong>{{ character.character_class ?? '-' }}</p>
             <p>
-              <strong>Status: </strong>
+              <strong class="text-gray-500">Статус: </strong>
               <span :class="character.status ? 'text-green-600' : 'text-red-600'">
                 {{ character.status ? 'Alive' : 'Dead' }}
               </span>
             </p>
           </div>
-          <p v-if="character.description" class="text-lg mb-4 text-center whitespace-pre-line">
-            {{ character.description }}
-          </p>
         </div>
       </div>
-      <div v-else class="text-center text-gray-500 mt-8">Character not found.</div>
+
+      <div v-else class="text-center text-gray-500 mt-8">
+        Персонаж не найден.
+      </div>
     </div>
   </div>
 </template>
