@@ -23,7 +23,7 @@ async def get_items(world_id: int):
 @router.get("/api/worlds/{world_id}/items/{item_id}")
 async def get_item(world_id: int, item_id: int):
     row = query_one(
-        "SELECT * FROM items WHERE world_id = ? AND item_id = ?",
+        "SELECT * FROM items WHERE world_id = ? AND id = ?",
         (world_id, item_id)
     )
     if not row:
