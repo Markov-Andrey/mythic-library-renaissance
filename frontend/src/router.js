@@ -13,6 +13,7 @@ import CharacterPage from "@/pages/CharacterPage.vue";
 import ItemsPage from "@/pages/ItemsPage.vue";
 import LocationsAddPage from "@/pages/LocationsAddPage.vue";
 import OrganisationsAddPage from "@/pages/OrganisationsAddPage.vue";
+import CharactersAddPage from "@/pages/CharactersAddPage.vue";
 
 const routes = [
   {
@@ -59,6 +60,11 @@ const routes = [
     path: '/:worldId/characters/:characterId',
     name: 'character',
     component: CharacterPage,
+  },
+  {
+    path: '/:worldId/characters/characters-add',
+    name: 'characters-add',
+    component: CharactersAddPage,
   },
   {
     path: '/:id/items',

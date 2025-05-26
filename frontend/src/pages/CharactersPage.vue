@@ -35,7 +35,7 @@ onMounted(() => {
           :route="`/${worldId}/characters/${character.id}`"
           :imagePath="character.photo_path"
         />
-        <NewCardAdd :to="`/${worldId}/characters-add`" />
+        <NewCardAdd :to="`/${worldId}/characters/characters-add`"/>
       </div>
     </div>
   </div>
