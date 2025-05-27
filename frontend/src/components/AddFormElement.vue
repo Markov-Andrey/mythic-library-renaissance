@@ -1,6 +1,5 @@
 <script setup>
 import { reactive } from 'vue';
-import QuillEditor from 'vue3-quill';
 import ky from 'ky';
 import router from '@/router.js';
 
@@ -70,16 +69,6 @@ const handleSubmit = async () => {
     console.error('Form submission error:', err);
   }
 };
-
-const quillModules = {
-  toolbar: [
-    [{ header: [1, 2, 3, false] }],
-    ['bold', 'italic', 'underline'],
-    [{ list: 'ordered' }, { list: 'bullet' }],
-    ['link'],
-    ['clean']
-  ]
-};
 </script>
 
 <template>
@@ -104,13 +93,11 @@ const quillModules = {
         class="w-full p-2 border border-gray-300 rounded-md"
       />
 
-      <QuillEditor
-        v-else-if="field.type === 'textarea'"
+      <textarea
+        v-if="field.type === 'textarea'"
         v-model="values[field.name]"
-        :modules="quillModules"
-        theme="snow"
-        class="min-h-[150px] border border-gray-300 rounded-md"
-      />
+        class="w-full min-h-[100px] p-2 border border-gray-300 rounded-md"
+      ></textarea>
 
       <input
         v-else-if="field.type === 'image'"
