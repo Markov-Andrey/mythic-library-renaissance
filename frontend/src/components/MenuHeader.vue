@@ -8,10 +8,10 @@ const worldId = computed(() => route.params.worldId || route.params.id || null);
 
 const menuItems = computed(() => [
   { name: 'World', path: `/${worldId.value}` },
-  { name: 'Локации', path: `/${worldId.value}/locations` },
-  { name: 'Организации', path: `/${worldId.value}/organizations` },
-  { name: 'Персонажи', path: `/${worldId.value}/characters` },
-  { name: 'Предметы', path: `/${worldId.value}/items` },
+  { name: 'Locations', path: `/${worldId.value}/locations` },
+  { name: 'Organizations', path: `/${worldId.value}/organizations` },
+  { name: 'Characters', path: `/${worldId.value}/characters` },
+  { name: 'Items', path: `/${worldId.value}/items` },
 ]);
 
 const currentPath = computed(() => route.path);
@@ -19,7 +19,7 @@ const currentPath = computed(() => route.path);
 
 <template>
   <header class="bg-gray-900 text-gray-300 p-4 shadow-md">
-    <nav class="max-w-5xl mx-auto flex gap-6">
+    <nav class="max-w-5xl mx-auto flex gap-1">
       <router-link
         v-for="item in menuItems"
         :key="item.name"
