@@ -33,6 +33,7 @@ onMounted(() => {
             :to="`locations/${location.id}`"
             :cover="location.cover"
             :name="location.name"
+            :tags="location.tags"
           />
         </div>
         <NewCardAdd :to="`/${worldId}/locations/locations-add`"/>

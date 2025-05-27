@@ -3,7 +3,7 @@
     :to="to"
     class="relative flex flex-col h-full bg-gray-100 rounded-xl shadow-md transition-all cursor-pointer group hover:brightness-125 hover:shadow-lg no-underline text-inherit"
   >
-    <div class="w-full h-56 rounded-t-xl overflow-hidden bg-gray-200">
+    <div class="relative w-full h-56 rounded-t-xl overflow-hidden bg-gray-200">
       <img
         v-if="cover && showImage"
         :src="`${apiBaseUrl}/${cover}`"
@@ -11,6 +11,7 @@
         class="w-full h-full object-cover"
         @error="hideImage"
       />
+      <TagList :tags="tags" />
     </div>
     <div class="px-4 py-2">
       <h2 class="text-xl font-semibold truncate whitespace-nowrap overflow-hidden">
@@ -21,29 +22,20 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import { ref } from 'vue';
+import TagList from './TagList.vue';
 
 const props = defineProps({
-  to: {
-    type: String,
-    required: true
-  },
-  cover: {
-    type: String
-  },
-  name: {
-    type: String,
-    required: true
-  }
-})
+  to: { type: String, required: true },
+  cover: String,
+  name: { type: String, required: true },
+  tags: String,
+});
 
-const showImage = ref(true)
-const apiBaseUrl = import.meta.env.VITE_API_BASE_URL
+const showImage = ref(true);
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const hideImage = () => {
-  showImage.value = false
-}
+  showImage.value = false;
+};
 </script>
-
-<style scoped>
-</style>
