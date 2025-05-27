@@ -26,12 +26,12 @@ onMounted(() => {
   <div class="min-h-screen bg-gray-100 py-10 px-4 text-gray-800">
     <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6">
       <div v-if="item" class="flex flex-col sm:flex-row gap-6">
-        <div class="flex-shrink-0">
+        <div class="flex-shrink-0 w-full sm:w-auto">
           <img
             v-if="item.cover"
             :src="`${apiBaseUrl}/${item.cover}`"
             alt="Item Cover"
-            class="w-40 h-40 object-cover rounded-lg shadow"
+            class="w-full max-w-md max-h-[400px] object-contain rounded-lg shadow mx-auto mb-6"
           />
         </div>
 

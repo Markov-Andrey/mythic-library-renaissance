@@ -33,13 +33,30 @@ async def get_locations(world_id: int):
 
 @router.get("/api/worlds/{world_id}/locations/{location_id}")
 async def get_location(world_id: int, location_id: int):
-    row = query_one(
+    location = query_one(
         "SELECT * FROM locations WHERE world_id = ? AND id = ?",
         (world_id, location_id)
     )
-    if not row:
+    if not location:
         raise HTTPException(status_code=404, detail="Location not found")
-    return row
+
+    parent_location = None
+    parent_id = location.get("parent_location_id")
+    if parent_id:
+        parent_location = query_one(
+            "SELECT * FROM locations WHERE world_id = ? AND id = ?",
+            (world_id, parent_id)
+        )
+
+    children = query_all(
+        "SELECT * FROM locations WHERE world_id = ? AND parent_location_id = ?",
+        (world_id, location_id)
+    )
+
+    location["parent"] = parent_location
+    location["children"] = children or []
+
+    return location
 
 
 @router.delete("/api/worlds/{world_id}/locations/{location_id}")
