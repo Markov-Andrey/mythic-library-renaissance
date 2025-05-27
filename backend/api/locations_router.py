@@ -42,6 +42,15 @@ async def get_location(world_id: int, location_id: int):
     return row
 
 
+@router.delete("/api/worlds/{world_id}/locations/{location_id}")
+async def delete_location(world_id: int, location_id: int):
+    execute(
+        "DELETE FROM locations WHERE world_id = ? AND id = ?",
+        (world_id, location_id)
+    )
+    return {"detail": "Location deleted"}
+
+
 @router.post("/api/location_add")
 def add_location(
         world_id: int = Form(...),
