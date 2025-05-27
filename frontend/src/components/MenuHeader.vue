@@ -19,7 +19,7 @@ const currentPath = computed(() => route.path);
 
 <template>
   <header class="bg-gray-900 text-gray-300 p-4 shadow-md">
-    <nav class="max-w-5xl mx-auto flex gap-1">
+    <nav class="max-w-5xl mx-auto flex">
       <router-link
         v-for="item in menuItems"
         :key="item.name"
