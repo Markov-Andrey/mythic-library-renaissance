@@ -3,7 +3,7 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import ky from 'ky';
 import NewCardAdd from "@/components/NewCardAdd.vue";
-import CardElement from "@/components/CardElement.vue";
+import MiniCard from "@/components/MiniCard.vue";
 
 const characters = ref([]);
 const route = useRoute();
@@ -25,19 +25,19 @@ onMounted(() => {
 
 <template>
   <div class="min-h-screen bg-gray-50 text-gray-800">
-    <div class="w-full max-w-5xl px-4 py-6 mx-auto">
-      <h1 class="text-3xl font-bold mb-4">Персонажи</h1>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-        <CardElement
-          v-for="character in characters"
-          :key="character.id"
-          :title="character.name"
-          :route="`/${worldId}/characters/${character.id}`"
-          :imagePath="character.photo_path"
+    <div class="w-full max-w-7xl px-2 py-6 mx-auto">
+      <div class="grid grid-cols-4 gap-8">
+        <div v-for="character in characters">
+          <MiniCard
+            :to="`/${worldId}/characters/${character.id}`"
+            :cover="character.photo_path"
+            :name="character.name"
+          />
+        </div>
+        <NewCardAdd
+          :to="`/${worldId}/characters/characters-add`"
         />
-        <NewCardAdd :to="`/${worldId}/characters/characters-add`"/>
       </div>
     </div>
   </div>
 </template>
-
