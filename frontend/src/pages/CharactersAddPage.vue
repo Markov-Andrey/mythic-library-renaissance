@@ -1,7 +1,7 @@
 <script setup>
 import {useRoute} from 'vue-router';
 import AddFormElement from "../components/AddFormElement.vue";
-import {onMounted, ref, computed} from "vue";
+import {onMounted, computed} from "vue";
 
 const route = useRoute();
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;

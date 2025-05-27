@@ -25,6 +25,15 @@ def query_one(query, params=()):
     return dict(row) if row else None
 
 
+def execute(query: str, params: tuple = ()):
+    conn = get_db_connection()
+    conn.row_factory = sqlite3.Row
+    cur = conn.cursor()
+    cur.execute(query, params)
+    conn.commit()
+    conn.close()
+
+
 def save_file_sync(upload_file: UploadFile, dest_folder: str) -> str:
     ext = os.path.splitext(upload_file.filename)[1]
     filename = f"{uuid.uuid4().hex}{ext}"
