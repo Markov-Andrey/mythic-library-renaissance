@@ -50,7 +50,7 @@ watch(() => route.params.locationId, fetchLocation, { immediate: true });
 </script>
 
 <template>
-  <div class="max-w-3xl mx-auto mt-8 p-6 bg-white rounded shadow" v-if="location">
+  <div class=" max-w-3xl mx-auto mt-8 p-6 bg-white rounded shadow" v-if="location">
     <div v-if="location.cover && showCover" class="mb-6">
       <img
         :src="`${apiBaseUrl}/${location.cover}`"
@@ -63,7 +63,9 @@ watch(() => route.params.locationId, fetchLocation, { immediate: true });
     <h1 class="text-3xl font-bold mb-4">{{ location.name }}</h1>
     <p class="mb-2"><strong>Type:</strong> {{ location.type || 'N/A' }}</p>
     <p class="mb-2"><strong>Tags:</strong> {{ location.tags || 'None' }}</p>
-    <p class="mb-4"><strong>Description:</strong> {{ location.description || 'No description available' }}</p>
+    <div class="mb-4"><strong>Description:</strong>
+      <p class="text-justify" v-html="(location.description || 'No description available').replace(/\r\n|\n|\r|\u2028|\u2029/g, '<br>')"></p>
+    </div>
 
     <div v-if="images.length" class="grid grid-cols-2 gap-4">
       <img

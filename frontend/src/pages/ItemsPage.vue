@@ -26,7 +26,7 @@ onMounted(() => {
 <template>
   <div class="min-h-screen bg-gray-50 text-gray-800">
     <div class="w-full max-w-7xl px-2 py-6 mx-auto">
-      <div class="grid grid-cols-4 gap-8">
+      <div class="grid grid-cols-5 gap-3">
         <div v-for="item in items">
           <MiniCard
             :to="`items/${item.id}`"

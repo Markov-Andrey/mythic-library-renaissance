@@ -1,7 +1,7 @@
 <template>
   <router-link
     :to="to"
-    class="relative flex flex-col h-full bg-gray-100 rounded-xl shadow-md transition-all cursor-pointer group hover:shadow-lg no-underline text-inherit"
+    class="relative flex flex-col h-full bg-gray-100 rounded-xl shadow-md transition-all cursor-pointer group hover:brightness-125 hover:shadow-lg no-underline text-inherit"
   >
     <div class="w-full h-56 rounded-t-xl overflow-hidden bg-gray-200">
       <img
