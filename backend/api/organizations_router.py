@@ -10,13 +10,27 @@ os.makedirs(STORAGE_DIR, exist_ok=True)
 
 
 @router.get("/api/worlds/{world_id}/organizations")
-async def get_locations(world_id: int):
-    rows = query_all(
-        "SELECT * FROM organizations WHERE world_id = ?",
-        (world_id,)
-    )
+async def get_organizations(
+    world_id: int,
+    type: Optional[str] = Query(default=None),
+    tags: Optional[List[str]] = Query(default=None),
+):
+    base_query = "SELECT * FROM organizations WHERE world_id = ?"
+    params = [world_id]
+
+    if type:
+        base_query += " AND type = ?"
+        params.append(type)
+
+    if tags:
+        for tag in tags:
+            base_query += " AND tags LIKE ?"
+            params.append(f"%{tag}%")
+
+    rows = query_all(base_query, tuple(params))
+
     if not rows:
-        raise HTTPException(status_code=404, detail="No organizations found")
+        raise HTTPException(status_code=404, detail="No locations found")
     return rows
 
 
@@ -35,6 +49,7 @@ async def get_location(world_id: int, organisation_id: int):
 def add_organization(
         world_id: int = Form(...),
         name: str = Form(...),
+        type: Optional[str] = Form(None),
         description: str = Form(...),
         tags: Optional[str] = Form(None),
         status: bool = Form(True),
@@ -44,6 +59,7 @@ def add_organization(
     data = {
         "world_id": world_id,
         "name": name,
+        "type": type,
         "description": description,
         "tags": tags,
         "status": status,
@@ -131,3 +147,12 @@ def update_organization(
     execute(f"UPDATE organizations SET {fields} WHERE id = ?", (*data.values(), organization_id))
 
     return {"message": "Location updated"}
+
+
+@router.delete("/api/worlds/{world_id}/organizations/{organisation_id}")
+async def delete_location(world_id: int, organisation_id: int):
+    execute(
+        "DELETE FROM organizations WHERE world_id = ? AND id = ?",
+        (world_id, organisation_id)
+    )
+    return {"detail": "Organization deleted"}

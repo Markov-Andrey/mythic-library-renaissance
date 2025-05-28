@@ -1,9 +1,11 @@
 <script setup>
-import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import {onMounted, ref, watch} from 'vue';
+import {useRoute, useRouter} from 'vue-router';
 import ky from 'ky';
+import ConfirmModal from "@/components/ConfirmModal.vue";
 
 const route = useRoute();
+const router = useRouter();
 const worldId = route.params.worldId;
 const organizationId = route.params.organizationId;
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
@@ -11,23 +13,26 @@ const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 const organization = ref(null);
 const showCover = ref(true);
 const images = ref([]);
+const showConfirmModal = ref(false);
 
 const fetchOrganization = async () => {
   try {
-    organization.value = await ky
-        .get(`${apiBaseUrl}/api/worlds/${worldId}/organizations/${organizationId}`)
-        .json();
+    const data = await ky.get(`${apiBaseUrl}/api/worlds/${worldId}/organizations/${organizationId}`).json();
+    organization.value = data;
+    images.value = data.images_json ? JSON.parse(data.images_json) : [];
+    showCover.value = true;
+  } catch {
+    organization.value = null;
+    images.value = [];
+  }
+};
 
-    if (organization.value.images_json) {
-      try {
-        images.value = JSON.parse(organization.value.images_json) || [];
-      } catch (error) {
-        console.error('Error parsing images JSON:', error);
-        images.value = [];
-      }
-    }
-  } catch (err) {
-    console.error('Error fetching organization:', err);
+const deleteConfirmed = async () => {
+  try {
+    await ky.delete(`${apiBaseUrl}/api/worlds/${worldId}/organizations/${route.params.organizationId}`);
+    router.push(`/${worldId}/organizations`);
+  } finally {
+    showConfirmModal.value = false;
   }
 };
 
@@ -35,9 +40,7 @@ const hideCover = () => {
   showCover.value = false;
 };
 
-onMounted(() => {
-  fetchOrganization();
-});
+watch(() => route.params.organizationId, fetchOrganization, { immediate: true });
 </script>
 
 <template>
@@ -56,10 +59,9 @@ onMounted(() => {
 
         <div class="flex-1 space-y-4">
           <h1 class="text-3xl font-bold text-gray-900">{{ organization.name }}</h1>
-          <p class="text-gray-600 whitespace-pre-line" v-if="organization.description">
-            {{ organization.description }}
-          </p>
-          <p v-else class="text-gray-500 italic">Описание отсутствует.</p>
+          <div class="mb-4">
+            <p class="text-justify" v-html="(organization.description || 'No description available').replace(/\r\n|\n|\r|\u2028|\u2029/g, '<br>')"></p>
+          </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-sm text-gray-700">
             <p><strong>Тип:</strong> {{ organization.type || '-' }}</p>
@@ -87,6 +89,18 @@ onMounted(() => {
         Организация не найдена.
       </div>
 
+      <div class="mt-6 flex gap-4">
+        <router-link :to="`/${worldId}/organizations/${route.params.organizationId}/edit`" class="inline-block px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">Редактировать</router-link>
+        <button @click="showConfirmModal = true" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 cursor-pointer">Удалить</button>
+        <router-link :to="`/${worldId}/organizations`" class="inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Назад</router-link>
+      </div>
+
+      <ConfirmModal
+        :show="showConfirmModal"
+        message="Вы уверены, что хотите удалить эту локацию?"
+        @confirm="deleteConfirmed"
+        @cancel="showConfirmModal = false"
+      />
     </div>
   </div>
 </template>

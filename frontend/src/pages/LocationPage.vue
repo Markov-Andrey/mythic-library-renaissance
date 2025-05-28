@@ -38,8 +38,6 @@ const deleteConfirmed = async () => {
 const hideCover = () => showCover.value = false;
 
 watch(() => route.params.locationId, fetchLocation, { immediate: true });
-
-const goBack = () => router.back();
 </script>
 
 <template>
@@ -52,7 +50,6 @@ const goBack = () => router.back();
     <p><strong>Type:</strong> {{ location.type || 'N/A' }}</p>
     <p><strong>Tags:</strong> {{ location.tags || 'None' }}</p>
     <div class="mb-4">
-      <strong>Description:</strong>
       <p class="text-justify" v-html="(location.description || 'No description available').replace(/\r\n|\n|\r|\u2028|\u2029/g, '<br>')"></p>
     </div>
 
@@ -86,7 +83,7 @@ const goBack = () => router.back();
 
     <ConfirmModal
       :show="showConfirmModal"
-      message="Вы уверены, что хотите удалить эту локацию?"
+      message="Вы уверены, что хотите удалить эту организацию?"
       @confirm="deleteConfirmed"
       @cancel="showConfirmModal = false"
     />

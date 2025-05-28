@@ -1,4 +1,3 @@
-<!-- Ваш основной компонент -->
 <script setup>
 import { onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -59,16 +58,6 @@ watch(selectedType, (newType) => {
     newQuery.type = newType;
   } else {
     delete newQuery.type;
-  }
-  router.push({ path: route.path, query: newQuery });
-});
-
-watch(selectedTags, (newTags) => {
-  const newQuery = { ...route.query };
-  if (newTags) {
-    newQuery.tags = newTags;
-  } else {
-    delete newQuery.tags;
   }
   router.push({ path: route.path, query: newQuery });
 });
