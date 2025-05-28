@@ -55,6 +55,7 @@ onMounted(() => {
             :cover="organization.cover"
             :name="organization.name"
             :type="organization.type"
+            :tags="organization.tags"
           />
         </div>
         <NewCardAdd :to="`/${worldId}/organizations/organizations-add`"/>
