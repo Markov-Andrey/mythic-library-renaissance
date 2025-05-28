@@ -10,17 +10,24 @@ os.makedirs(STORAGE_DIR, exist_ok=True)
 
 
 @router.get("/api/worlds/{world_id}/locations")
-async def get_locations(world_id: int, type: str | None = Query(default=None)):
+async def get_locations(
+    world_id: int,
+    type: Optional[str] = Query(default=None),
+    tags: Optional[List[str]] = Query(default=None),
+):
+    base_query = "SELECT * FROM locations WHERE world_id = ?"
+    params = [world_id]
+
     if type:
-        rows = query_all(
-            "SELECT * FROM locations WHERE world_id = ? AND type = ?",
-            (world_id, type)
-        )
-    else:
-        rows = query_all(
-            "SELECT * FROM locations WHERE world_id = ?",
-            (world_id,)
-        )
+        base_query += " AND type = ?"
+        params.append(type)
+
+    if tags:
+        for tag in tags:
+            base_query += " AND tags LIKE ?"
+            params.append(f"%{tag}%")
+
+    rows = query_all(base_query, tuple(params))
 
     if not rows:
         raise HTTPException(status_code=404, detail="No locations found")
