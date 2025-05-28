@@ -4,7 +4,7 @@
       v-for="(tag, index) in tagsArray"
       :key="index"
       @click="() => tagChange(tag)"
-      class="hover:brightness-125 border border-black text-[10px] font-semibold px-2 py-0.5 rounded uppercase select-none bg-blue-300 pointer-events-auto cursor-pointer"
+      :class="['hover:brightness-125 border border-black text-[10px] font-semibold px-2 py-0.5 rounded uppercase select-none pointer-events-auto cursor-pointer', { 'bg-blue-600 text-white': isActive(tag), 'bg-blue-300': !isActive(tag) }]"
     >
       #{{ tag }}
     </span>
@@ -27,32 +27,21 @@ const tagsArray = computed(() => {
   return props.tags.split(',').map(t => t.trim()).filter(Boolean);
 });
 
+const isActive = (tag) => {
+  if (!route.query.tags) return false;
+  if (Array.isArray(route.query.tags)) {
+    return route.query.tags.includes(tag);
+  }
+  return route.query.tags === tag;
+};
+
 const tagChange = (tag) => {
-  const newQuery = { ...route.query };
-
-  let currentTags = [];
-  if (newQuery.tags) {
-    if (Array.isArray(newQuery.tags)) {
-      currentTags = [...newQuery.tags];
-    } else {
-      currentTags = [newQuery.tags];
-    }
-  }
-
-  const tagIndex = currentTags.indexOf(tag);
-
-  if (tagIndex !== -1) {
-    currentTags.splice(tagIndex, 1);
-  } else {
-    currentTags.push(tag);
-  }
-
-  if (currentTags.length === 0) {
+  const newQuery = {...route.query};
+  if (isActive(tag)) {
     delete newQuery.tags;
   } else {
-    newQuery.tags = currentTags;
+    newQuery.tags = tag;
   }
-
   router.push({
     path: route.path,
     query: newQuery,
