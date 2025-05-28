@@ -9,63 +9,6 @@ STORAGE_DIR = "storage/locations"
 os.makedirs(STORAGE_DIR, exist_ok=True)
 
 
-@router.get("/api/worlds/{world_id}/locations")
-async def get_locations(
-    world_id: int,
-    type: Optional[str] = Query(default=None),
-    tags: Optional[List[str]] = Query(default=None),
-):
-    base_query = "SELECT * FROM locations WHERE world_id = ?"
-    params = [world_id]
-
-    if type:
-        base_query += " AND type = ?"
-        params.append(type)
-
-    if tags:
-        for tag in tags:
-            base_query += " AND tags LIKE ?"
-            params.append(f"%{tag}%")
-
-    rows = query_all(base_query, tuple(params))
-
-    if not rows:
-        raise HTTPException(status_code=404, detail="No locations found")
-    return rows
-
-
-@router.get("/api/worlds/{world_id}/location-types")
-async def get_location_types(world_id: int):
-    query = "SELECT DISTINCT type FROM locations WHERE world_id = ?"
-    rows = query_all(query, (world_id,))
-
-    if not rows:
-        raise HTTPException(status_code=404, detail="No types found")
-
-    unique_types = [row["type"] for row in rows]
-    return unique_types
-
-
-@router.get("/api/worlds/{world_id}/location-tags")
-async def get_location_tags(world_id: int):
-    query = "SELECT tags FROM locations WHERE world_id = ? AND tags IS NOT NULL"
-    rows = query_all(query, (world_id,))
-
-    if not rows:
-        raise HTTPException(status_code=404, detail="No tags found")
-
-    tags_set = set()
-    for row in rows:
-        tags = row["tags"].split(",")
-        for tag in tags:
-            clean_tag = tag.strip()
-            if clean_tag:
-                tags_set.add(clean_tag)
-
-    unique_tags = sorted(tags_set)
-    return unique_tags
-
-
 @router.get("/api/worlds/{world_id}/locations_array")
 async def get_locations(world_id: int):
     rows = query_all(

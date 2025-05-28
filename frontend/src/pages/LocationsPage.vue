@@ -27,7 +27,7 @@ const fetchLocations = async () => {
 
 const fetchLocationsTypes = async () => {
   try {
-    const url = `${apiBaseUrl}/api/worlds/${worldId}/location-types`;
+    const url = `${apiBaseUrl}/api/worlds/${worldId}/locations/types`;
     locationsTypes.value = await ky.get(url).json();
   } catch (err) {
     console.error('Error fetching location types:', err);
@@ -36,7 +36,7 @@ const fetchLocationsTypes = async () => {
 
 const fetchLocationsTags = async () => {
   try {
-    const url = `${apiBaseUrl}/api/worlds/${worldId}/location-tags`;
+    const url = `${apiBaseUrl}/api/worlds/${worldId}/locations/tags`;
     locationsTags.value = await ky.get(url).json();
   } catch (err) {
     console.error('Error fetching location tags:', err);
@@ -52,14 +52,25 @@ watch(() => route.query, () => {
   selectedTags.value = route.query.tags || '';
 }, { deep: true });
 
-watch(selectedType, (newType) => {
+watch([selectedType, selectedTags], ([newType, newTags]) => {
   const newQuery = { ...route.query };
+
   if (newType) {
     newQuery.type = newType;
   } else {
     delete newQuery.type;
   }
-  router.push({ path: route.path, query: newQuery });
+
+  if (newTags) {
+    newQuery.tags = newTags;
+  } else {
+    delete newQuery.tags;
+  }
+
+  router.push({
+    path: route.path,
+    query: newQuery
+  });
 });
 
 onMounted(() => {
