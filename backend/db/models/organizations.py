@@ -9,6 +9,7 @@ class Organization(Base):
     id = Column(Integer, primary_key=True, index=True)
     world_id = Column(Integer, ForeignKey('worlds.id'), nullable=False)
     name = Column(String, nullable=False)
+    type = Column(Text, nullable=True)
     description = Column(Text, nullable=True)
     status = Column(Boolean, default=True)
     tags = Column(String, nullable=True)

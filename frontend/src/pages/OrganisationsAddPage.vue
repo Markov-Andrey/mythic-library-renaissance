@@ -12,6 +12,7 @@ const fields = computed(() => [
   { name: 'world_id', label: 'Мир', type: 'text', hidden: true, default: worldId },
   { name: 'cover', label: 'Обложка', type: 'image' },
   { name: 'name', label: 'Имя организации', type: 'text', required: true },
+  { name: 'type', label: 'Тип организации', type: 'text' },
   { name: 'description', label: 'Описание', type: 'textarea' },
   { name: 'tags', label: 'Теги', type: 'text' },
   { name: 'images_json', label: 'Галерея', type: 'images' },
@@ -22,7 +23,7 @@ const fields = computed(() => [
 <template>
   <AddFormElement
     :fields="fields"
-    api-route="/api/organization_add"
-    :success-redirect="`/${worldId}/organisations`"
+    api-route="/api/organization_edit"
+    :success-redirect="`/${worldId}/organizations`"
   />
 </template>

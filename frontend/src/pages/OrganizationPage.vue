@@ -62,6 +62,7 @@ onMounted(() => {
           <p v-else class="text-gray-500 italic">Описание отсутствует.</p>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2 text-sm text-gray-700">
+            <p><strong>Тип:</strong> {{ organization.type || '-' }}</p>
             <p><strong>Теги:</strong> {{ organization.tags || '-' }}</p>
             <p><strong>Статус:</strong> {{ organization.status ? 'Активна' : 'Неактивна' }}</p>
           </div>

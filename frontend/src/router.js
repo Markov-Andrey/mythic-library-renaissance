@@ -17,6 +17,7 @@ import CharactersAddPage from "@/pages/CharactersAddPage.vue";
 import ItemsAddPage from "@/pages/ItemsAddPage.vue";
 import ItemPage from "@/pages/ItemPage.vue";
 import LocationsEditPage from "@/pages/LocationsEditPage.vue";
+import OrganisationsEditPage from "@/pages/OrganisationsEditPage.vue";
 
 const routes = [
   {
@@ -53,6 +54,11 @@ const routes = [
     path: '/:worldId/organizations/organizations-add',
     name: 'organizations-add',
     component: OrganisationsAddPage,
+  },
+  {
+    path: '/:worldId/organizations/:organizationId/edit',
+    name: 'organizations-edit',
+    component: OrganisationsEditPage,
   },
   {
     path: '/:id/characters',

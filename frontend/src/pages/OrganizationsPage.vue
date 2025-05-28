@@ -32,6 +32,7 @@ onMounted(() => {
             :to="`organizations/${organization.id}`"
             :cover="organization.cover"
             :name="organization.name"
+            :type="organization.type"
           />
         </div>
         <NewCardAdd :to="`/${worldId}/organizations/organizations-add`"/>
