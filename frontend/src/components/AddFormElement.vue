@@ -125,7 +125,7 @@ const handleSubmit = async () => {
         :required="field.required"
         class="w-full p-2 border border-gray-300 rounded-md"
       >
-        <option :value="null">—</option>
+        <option value="">—</option>
         <option
           v-for="option in field.options"
           :key="option.id"

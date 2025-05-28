@@ -77,15 +77,17 @@ async def delete_location(world_id: int, location_id: int):
 
 @router.post("/api/location_add")
 def add_location(
-        world_id: int = Form(...),
-        name: str = Form(...),
-        description: str = Form(...),
-        type: Optional[str] = Form(None),
-        tags: Optional[str] = Form(None),
-        parent_location_id: Optional[int] = Form(None),
-        cover: Optional[UploadFile] = File(None),
-        images_json: Optional[List[UploadFile]] = File(None)
+    world_id: int = Form(...),
+    name: str = Form(...),
+    description: str = Form(...),
+    type: Optional[str] = Form(None),
+    tags: Optional[str] = Form(None),
+    parent_location_id: Optional[str] = Form(None),
+    cover: Optional[UploadFile] = File(None),
+    images_json: Optional[List[UploadFile]] = File(None)
 ):
+    parent_location_id = int(parent_location_id) if parent_location_id else None
+
     data = {
         "world_id": world_id,
         "name": name,
