@@ -1,7 +1,7 @@
 import os
 import json
 from typing import Optional, List
-from fastapi import HTTPException, APIRouter, UploadFile, File, Form
+from fastapi import HTTPException, APIRouter, UploadFile, File, Form, Query
 from backend.utils.db_helpers import query_all, query_one, save_file_sync, insert_into_table, execute
 
 router = APIRouter()
@@ -10,11 +10,18 @@ os.makedirs(STORAGE_DIR, exist_ok=True)
 
 
 @router.get("/api/worlds/{world_id}/locations")
-async def get_locations(world_id: int):
-    rows = query_all(
-        "SELECT * FROM locations WHERE world_id = ?",
-        (world_id,)
-    )
+async def get_locations(world_id: int, type: str | None = Query(default=None)):
+    if type:
+        rows = query_all(
+            "SELECT * FROM locations WHERE world_id = ? AND type = ?",
+            (world_id, type)
+        )
+    else:
+        rows = query_all(
+            "SELECT * FROM locations WHERE world_id = ?",
+            (world_id,)
+        )
+
     if not rows:
         raise HTTPException(status_code=404, detail="No locations found")
     return rows

@@ -1,11 +1,11 @@
 <template>
-  <div v-if="tagsArray.length" class="absolute bottom-0 left-0 right-0 flex flex-wrap gap-1 p-2 rounded-b-xl">
+  <div v-if="tagsArray.length" class="absolute bottom-10 left-0 right-0 flex flex-wrap gap-1 p-2 rounded-b-xl">
     <span
       v-for="(tag, index) in tagsArray"
       :key="index"
       class="border border-black text-[10px] font-semibold px-2 py-0.5 rounded uppercase select-none bg-blue-300"
     >
-      {{ tag.trim() }}
+      #{{ tag.trim() }}
     </span>
   </div>
 </template>

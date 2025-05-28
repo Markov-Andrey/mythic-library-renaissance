@@ -1,10 +1,9 @@
 <script setup>
-import {onMounted, ref} from 'vue';
-import {useRoute} from 'vue-router';
+import { onMounted, ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
 import ky from 'ky';
 import NewCardAdd from "@/components/NewCardAdd.vue";
 import MiniCard from "@/components/MiniCard.vue";
-import {w} from "@3d-dice/dice-box/dist/Dice.js";
 
 const locations = ref([]);
 const route = useRoute();
@@ -13,7 +12,9 @@ const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const fetchLocations = async () => {
   try {
-    locations.value = await ky.get(`${apiBaseUrl}/api/worlds/${worldId}/locations`).json();
+    const params = new URLSearchParams(route.query).toString();
+    const url = `${apiBaseUrl}/api/worlds/${worldId}/locations${params ? '?' + params : ''}`;
+    locations.value = await ky.get(url).json();
   } catch (err) {
     console.error('Error fetching locations:', err);
   }
@@ -22,6 +23,10 @@ const fetchLocations = async () => {
 onMounted(() => {
   fetchLocations();
 });
+
+watch(() => route.query, () => {
+  fetchLocations();
+}, { deep: true });
 </script>
 
 <template>
@@ -33,6 +38,7 @@ onMounted(() => {
             :to="`locations/${location.id}`"
             :cover="location.cover"
             :name="location.name"
+            :type="location.type"
             :tags="location.tags"
           />
         </div>

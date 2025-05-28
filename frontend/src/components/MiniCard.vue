@@ -1,7 +1,8 @@
 <template>
+  <div class="relative">
   <router-link
     :to="to"
-    class="relative flex flex-col h-full bg-gray-100 rounded-xl shadow-md transition-all cursor-pointer group hover:brightness-125 hover:shadow-lg no-underline text-inherit"
+    class="flex flex-col h-full bg-gray-100 rounded-xl shadow-md transition-all cursor-pointer group hover:brightness-125 hover:shadow-lg no-underline text-inherit"
   >
     <div class="relative w-full h-56 rounded-t-xl overflow-hidden bg-gray-200">
       <img
@@ -11,7 +12,6 @@
         class="w-full h-full object-cover"
         @error="hideImage"
       />
-      <TagList :tags="tags" />
     </div>
     <div class="px-4 py-2">
       <h2 class="text-xl font-semibold truncate whitespace-nowrap overflow-hidden">
@@ -19,17 +19,22 @@
       </h2>
     </div>
   </router-link>
+  <TypeElement :type="type" />
+  <TagList :tags="tags" />
+  </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import TagList from './TagList.vue';
+import TypeElement from './TypeElement.vue';
 
 const props = defineProps({
   to: { type: String, required: true },
   cover: String,
   name: { type: String, required: true },
   tags: String,
+  type: String,
 });
 
 const showImage = ref(true);
