@@ -4,7 +4,6 @@ import WorldsPage from '@/pages/WorldsPage.vue';
 import WorldsAddPage from '@/pages/WorldsAddPage.vue';
 import WorldPage from '@/pages/WorldPage.vue';
 import LocationPage from '@/pages/LocationPage.vue';
-import CharactersPage from '@/pages/CharactersPage.vue';
 import TestPage from '@/pages/TestPage.vue';
 import OrganizationPage from "@/pages/OrganizationPage.vue";
 import CharacterPage from "@/pages/CharacterPage.vue";
