@@ -18,7 +18,7 @@ import LocationsEditPage from "@/pages/LocationsEditPage.vue";
 import OrganisationsEditPage from "@/pages/OrganisationsEditPage.vue";
 import EntitiesPage from "@/pages/EntitiesPage.vue";
 
-const entities = ['locations', 'organizations'];
+const entities = ['locations', 'organizations', 'characters'];
 const entityRoutes = entities.map(entity => ({
   path: `/:id/${entity}`,
   name: entity,
@@ -56,11 +56,6 @@ const routes = [
     path: '/:worldId/organizations/:organizationId/edit',
     name: 'organizations-edit',
     component: OrganisationsEditPage,
-  },
-  {
-    path: '/:id/characters',
-    name: 'characters',
-    component: CharactersPage,
   },
   {
     path: '/:worldId/characters/:characterId',

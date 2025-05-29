@@ -57,10 +57,6 @@ async def get_types(world_id: int, entity: str):
 async def get_tags(world_id: int, entity: str):
     query = f"SELECT tags FROM {entity} WHERE world_id = ? AND tags IS NOT NULL"
     rows = query_all(query, (world_id,))
-
-    if not rows:
-        raise HTTPException(status_code=404, detail="No tags found")
-
     tags_set = set()
     for row in rows:
         tags = row["tags"].split(",")
