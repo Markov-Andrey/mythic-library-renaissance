@@ -18,6 +18,7 @@ async def get_entities(
         entity: str,
         type: Optional[str] = Query(default=None),
         tags: Optional[List[str]] = Query(default=None),
+        search: Optional[str] = Query(default=None),
 ):
     if entity not in ALLOWED_TABLES:
         raise HTTPException(status_code=400, detail="Invalid entity type")
@@ -35,6 +36,10 @@ async def get_entities(
         for tag in tags:
             base_query += " AND tags LIKE ?"
             params.append(f"%{tag}%")
+
+    if search:
+        base_query += " AND name LIKE ?"
+        params.append(f"%{search}%")
 
     return query_all(base_query, tuple(params))
 

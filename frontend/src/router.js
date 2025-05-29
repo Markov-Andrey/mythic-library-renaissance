@@ -3,9 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import WorldsPage from '@/pages/WorldsPage.vue';
 import WorldsAddPage from '@/pages/WorldsAddPage.vue';
 import WorldPage from '@/pages/WorldPage.vue';
-import LocationsPage from '@/pages/LocationsPage.vue';
 import LocationPage from '@/pages/LocationPage.vue';
-import OrganizationsPage from '@/pages/OrganizationsPage.vue';
 import CharactersPage from '@/pages/CharactersPage.vue';
 import TestPage from '@/pages/TestPage.vue';
 import OrganizationPage from "@/pages/OrganizationPage.vue";
@@ -18,8 +16,17 @@ import ItemsAddPage from "@/pages/ItemsAddPage.vue";
 import ItemPage from "@/pages/ItemPage.vue";
 import LocationsEditPage from "@/pages/LocationsEditPage.vue";
 import OrganisationsEditPage from "@/pages/OrganisationsEditPage.vue";
+import EntitiesPage from "@/pages/EntitiesPage.vue";
+
+const entities = ['locations', 'organizations'];
+const entityRoutes = entities.map(entity => ({
+  path: `/:id/${entity}`,
+  name: entity,
+  component: EntitiesPage,
+}));
 
 const routes = [
+  ...entityRoutes,
   {
     path: '/',
     name: 'worlds',
@@ -34,16 +41,6 @@ const routes = [
     path: '/:id',
     name: 'world',
     component: WorldPage,
-  },
-  {
-    path: '/:id/locations',
-    name: 'locations',
-    component: LocationsPage,
-  },
-  {
-    path: '/:id/organizations',
-    name: 'organizations',
-    component: OrganizationsPage,
   },
   {
     path: '/:worldId/organizations/:organizationId',
