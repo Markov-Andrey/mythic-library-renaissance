@@ -17,6 +17,7 @@ import OrganisationsEditPage from "@/pages/OrganisationsEditPage.vue";
 import EntitiesPage from "@/pages/EntitiesPage.vue";
 import AbilitiesAddPage from "@/pages/AbilitiesAddPage.vue";
 import AbilityPage from "@/pages/AbilityPage.vue";
+import CharactersEditPage from "@/pages/CharactersEditPage.vue";
 
 const entities = ['locations', 'organizations', 'characters', 'items', 'abilities'];
 const entityRoutes = entities.map(entity => ({
@@ -58,9 +59,14 @@ const routes = [
     component: OrganisationsEditPage,
   },
   {
-    path: '/:worldId/characters/:characterId',
+    path: '/:worldId/characters/:id',
     name: 'character',
     component: CharacterPage,
+  },
+  {
+    path: '/:worldId/characters/:id/edit',
+    name: 'characters-edit',
+    component: CharactersEditPage,
   },
   {
     path: '/:worldId/abilities/:id',

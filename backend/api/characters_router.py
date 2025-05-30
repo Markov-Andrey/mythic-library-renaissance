@@ -8,7 +8,7 @@ STORAGE_DIR = "storage/characters"
 os.makedirs(STORAGE_DIR, exist_ok=True)
 
 
-@router.get("/api/worlds/{world_id}/character/{item_id}")
+@router.get("/api/worlds/{world_id}/characters/{item_id}")
 async def get_character(world_id: int, item_id: int):
     row = query_one(
         "SELECT * FROM characters WHERE world_id = ? AND id = ?",
