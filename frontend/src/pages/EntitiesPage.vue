@@ -33,8 +33,8 @@ const fetchAll = async () => {
   const base = `${api}/api/worlds/${id}/${name}`
 
   const [types, tags, data] = await Promise.all([
-    ky.get(`${base}/types`).json(),
-    ky.get(`${base}/tags`).json(),
+    ky.get(`${base}/meta/types`).json(),
+    ky.get(`${base}/meta/tags`).json(),
     ky.get(`${base}${q ? '?' + q : ''}`).json()
   ])
 

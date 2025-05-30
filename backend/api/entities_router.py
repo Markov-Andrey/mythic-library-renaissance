@@ -1,8 +1,8 @@
 import os
 import json
 from typing import Optional, List
-from fastapi import HTTPException, APIRouter, UploadFile, File, Form, Query, Request
-from backend.utils.db_helpers import query_all, query_one, save_file_sync, insert_into_table, execute
+from fastapi import HTTPException, APIRouter, UploadFile, File, Query, Request
+from backend.utils.db_helpers import query_all, save_file_sync, insert_into_table, execute
 
 router = APIRouter()
 
@@ -11,6 +11,7 @@ ALLOWED_TABLES = {
     "organizations": "organizations",
     "items": "items",
     "characters": "characters",
+    "abilities": "abilities",
 }
 
 
@@ -95,16 +96,14 @@ async def add_entity(
     return {"message": f"{entity.capitalize()} added", "id": inserted_id}
 
 
-@router.get("/api/worlds/{world_id}/{entity}/types")
+@router.get("/api/worlds/{world_id}/{entity}/meta/types")
 async def get_types(world_id: int, entity: str):
     query = f"SELECT DISTINCT type FROM {entity} WHERE world_id = ?"
     rows = query_all(query, (world_id,))
-    if not rows:
-        raise HTTPException(status_code=404, detail="No types found")
-    return [row["type"] for row in rows]
+    return [row["type"] for row in rows if row["type"]]
 
 
-@router.get("/api/worlds/{world_id}/{entity}/tags")
+@router.get("/api/worlds/{world_id}/{entity}/meta/tags")
 async def get_tags(world_id: int, entity: str):
     query = f"SELECT tags FROM {entity} WHERE world_id = ? AND tags IS NOT NULL"
     rows = query_all(query, (world_id,))

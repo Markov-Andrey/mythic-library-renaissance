@@ -1,10 +1,7 @@
 import os
-import sqlite3
-import json
-from typing import Optional, List
-from backend.db.database import get_db_connection
+from typing import Optional
 from fastapi import HTTPException, APIRouter, UploadFile, File, Form
-from backend.utils.db_helpers import query_all, query_one, save_file_sync, insert_into_table
+from backend.utils.db_helpers import query_one, save_file_sync, insert_into_table
 
 router = APIRouter()
 STORAGE_DIR = "storage/characters"

@@ -12,6 +12,7 @@ const menuItems = computed(() => [
   { name: 'Organizations', path: `/${worldId.value}/organizations` },
   { name: 'Characters', path: `/${worldId.value}/characters` },
   { name: 'Items', path: `/${worldId.value}/items` },
+  { name: 'Abilities', path: `/${worldId.value}/abilities` },
 ]);
 
 const currentPath = computed(() => route.path);

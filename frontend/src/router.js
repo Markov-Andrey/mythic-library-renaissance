@@ -7,7 +7,6 @@ import LocationPage from '@/pages/LocationPage.vue';
 import TestPage from '@/pages/TestPage.vue';
 import OrganizationPage from "@/pages/OrganizationPage.vue";
 import CharacterPage from "@/pages/CharacterPage.vue";
-import ItemsPage from "@/pages/ItemsPage.vue";
 import LocationsAddPage from "@/pages/LocationsAddPage.vue";
 import OrganisationsAddPage from "@/pages/OrganisationsAddPage.vue";
 import CharactersAddPage from "@/pages/CharactersAddPage.vue";
@@ -17,7 +16,7 @@ import LocationsEditPage from "@/pages/LocationsEditPage.vue";
 import OrganisationsEditPage from "@/pages/OrganisationsEditPage.vue";
 import EntitiesPage from "@/pages/EntitiesPage.vue";
 
-const entities = ['locations', 'organizations', 'characters', 'items'];
+const entities = ['locations', 'organizations', 'characters', 'items', 'abilities'];
 const entityRoutes = entities.map(entity => ({
   path: `/:id/${entity}`,
   name: entity,
