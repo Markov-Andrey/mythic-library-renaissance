@@ -14,7 +14,7 @@
       />
     </div>
     <div class="px-4 py-2">
-      <h2 class="text-xl font-semibold truncate whitespace-nowrap overflow-hidden">
+      <h2 class="name-heading">
         {{ name }}
       </h2>
     </div>
@@ -44,3 +44,17 @@ const hideImage = () => {
   showImage.value = false;
 };
 </script>
+
+<style scoped>
+.name-heading {
+  font-weight: 600;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: clamp(0.9rem, 1.2vw, 1.25rem);
+  line-height: 1.2;
+  min-height: calc(1.2em * 2);
+}
+</style>

@@ -47,7 +47,7 @@ async def get_entities(
     return query_all(base_query, tuple(params))
 
 
-@router.post("/api/{entity}/add")
+@router.post("/api/add/{entity}")
 async def add_entity(
     entity: str,
     request: Request,
@@ -64,18 +64,23 @@ async def add_entity(
     data = {}
 
     for key, value in form.items():
-        if value == "" or value.lower() == "null":
-            data[key] = None
-        elif value.isdigit():
-            data[key] = int(value)
+        if isinstance(value, str):
+            val = value.strip()
+
+            if val == "" or val.lower() == "null":
+                data[key] = None
+            elif val.isdigit():
+                data[key] = int(val)
+            else:
+                try:
+                    data[key] = float(val)
+                except ValueError:
+                    if val.lower() in ("true", "false"):
+                        data[key] = val.lower() == "true"
+                    else:
+                        data[key] = val
         else:
-            try:
-                data[key] = float(value)
-            except ValueError:
-                if value.lower() in ("true", "false"):
-                    data[key] = value.lower() == "true"
-                else:
-                    data[key] = value
+            continue
 
     if cover:
         data["cover"] = save_file_sync(cover, STORAGE_DIR)
@@ -86,7 +91,7 @@ async def add_entity(
 
     if entity == "locations" and "parent_location_id" in data:
         try:
-            data["parent_location_id"] = int(data["parent_location_id"])
+            data["parent_location_id"] = int(data["parent_location_id"]) if data["parent_location_id"] is not None else None
         except (ValueError, TypeError):
             data["parent_location_id"] = None
 

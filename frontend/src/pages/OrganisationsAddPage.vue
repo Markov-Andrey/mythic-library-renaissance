@@ -23,7 +23,7 @@ const fields = computed(() => [
 <template>
   <AddFormElement
     :fields="fields"
-    api-route="/api/organizations/add"
+    api-route="/api/add/organizations"
     :success-redirect="`/${worldId}/organizations`"
   />
 </template>

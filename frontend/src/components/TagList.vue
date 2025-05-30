@@ -1,5 +1,5 @@
 <template>
-  <div v-if="tagsArray.length" class="absolute bottom-10 left-0 right-0 flex flex-wrap gap-1 p-2 rounded-b-xl pointer-events-none">
+  <div v-if="tagsArray.length" class="absolute bottom-[20%] left-0 right-0 flex flex-wrap gap-1 p-2 rounded-b-xl pointer-events-none">
     <span
       v-for="(tag, index) in tagsArray"
       :key="index"

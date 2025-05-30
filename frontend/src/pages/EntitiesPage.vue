@@ -108,7 +108,7 @@ watch([selectedType, selectedTags, searchQuery], () => {
             :tags="obj.tags"
           />
         </div>
-        <NewCardAdd :to="`/${route.params.id}/${route.name}/${route.name}/add`" />
+        <NewCardAdd :to="`/${route.params.id}/add/${route.name}`" />
       </div>
     </div>
   </div>

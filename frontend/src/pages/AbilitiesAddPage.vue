@@ -13,19 +13,17 @@ onMounted(() => {
 const fields = computed(() => [
   { name: 'world_id', label: 'Мир', type: 'text', hidden: true, default: worldId },
   { name: 'cover', label: 'Обложка', type: 'image' },
-  { name: 'name', label: 'Название предмета', type: 'text', required: true },
+  { name: 'name', label: 'Название способности', type: 'text', required: true },
   { name: 'description', label: 'Описание', type: 'textarea' },
-  { name: 'type', label: 'Тип', type: 'text', required: true },
+  { name: 'type', label: 'Тип', type: 'text' },
   { name: 'tags', label: 'Теги', type: 'text' },
-  { name: 'value', label: 'Ценность', type: 'number', required: true },
-  { name: 'weight', label: 'Вес', type: 'number', required: true }
 ]);
 </script>
 
 <template>
   <AddFormElement
       :fields="fields"
-      api-route="/api/add/items"
-      :success-redirect="`/${worldId}/items`"
+      api-route="/api/add/abilities"
+      :success-redirect="`/${worldId}/abilities`"
   />
 </template>

@@ -20,44 +20,6 @@ async def get_location(world_id: int, organisation_id: int):
     return row
 
 
-@router.post("/api/organization_add")
-def add_organization(
-        world_id: int = Form(...),
-        name: str = Form(...),
-        type: Optional[str] = Form(None),
-        description: str = Form(...),
-        tags: Optional[str] = Form(None),
-        status: bool = Form(True),
-        cover: Optional[UploadFile] = File(None),
-        images_json: Optional[List[UploadFile]] = File(None)
-):
-    data = {
-        "world_id": world_id,
-        "name": name,
-        "type": type,
-        "description": description,
-        "tags": tags,
-        "status": status,
-        "cover": None,
-        "images_json": "[]",
-    }
-
-    if cover:
-        file_path = save_file_sync(cover, STORAGE_DIR)
-        data["cover"] = file_path
-
-    if images_json:
-        saved_paths = []
-        for img_file in images_json:
-            path = save_file_sync(img_file, STORAGE_DIR)
-            saved_paths.append(path)
-        data["images_json"] = json.dumps(saved_paths)
-
-    insert_into_table("organizations", data)
-
-    return {"message": "Organization added"}
-
-
 @router.post("/api/organization_edit")
 def update_organization(
     organization_id: int = Form(...),
