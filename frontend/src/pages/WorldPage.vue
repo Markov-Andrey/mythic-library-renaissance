@@ -43,6 +43,7 @@ onMounted(() => {
         <p><strong>Описание:</strong> {{ world.description || 'Нет описания' }}</p>
         <p><strong>Визуальный стиль:</strong> {{ world.visual_style || 'Не задано' }}</p>
         <p><strong>Теги:</strong> {{ world.tags || 'Нет тегов' }}</p>
+        <router-link :to="`/`" class="mt-6 inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Выйти</router-link>
       </div>
     </div>
   </div>
