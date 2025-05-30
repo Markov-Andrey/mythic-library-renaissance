@@ -19,7 +19,8 @@ const currentPath = computed(() => route.path);
 </script>
 
 <template>
-  <header class="bg-gray-900 text-gray-300 p-4 shadow-md">
+  <div class="pt-8"></div>
+  <header class="fixed top-0 left-0 right-0 bg-gray-900 text-gray-300 py-1 shadow-md z-50">
     <nav class="max-w-5xl mx-auto flex">
       <router-link
         v-for="item in menuItems"
