@@ -1,23 +1,11 @@
 import os
-import json
-from typing import Optional, List
+from typing import Optional
 from fastapi import HTTPException, APIRouter, UploadFile, File, Form
-from backend.utils.db_helpers import query_all, query_one, save_file_sync, insert_into_table
+from backend.utils.db_helpers import query_one, save_file_sync, insert_into_table
 
 router = APIRouter()
 STORAGE_DIR = "storage/items"
 os.makedirs(STORAGE_DIR, exist_ok=True)
-
-
-@router.get("/api/worlds/{world_id}/items")
-async def get_items(world_id: int):
-    rows = query_all(
-        "SELECT * FROM items WHERE world_id = ?",
-        (world_id,)
-    )
-    if not rows:
-        raise HTTPException(status_code=404, detail="No items found")
-    return rows
 
 
 @router.get("/api/worlds/{world_id}/items/{item_id}")

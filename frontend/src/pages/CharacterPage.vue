@@ -11,7 +11,7 @@ const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const fetchCharacter = async () => {
   try {
-    character.value = await ky.get(`${apiBaseUrl}/api/worlds/${worldId}/characters/${characterId}`).json();
+    character.value = await ky.get(`${apiBaseUrl}/api/worlds/${worldId}/character/${characterId}`).json();
   } catch (err) {
     console.error('Error fetching character:', err);
   }
@@ -28,8 +28,8 @@ onMounted(() => {
       <div v-if="character" class="flex flex-col sm:flex-row gap-6">
         <div class="flex-shrink-0 w-full sm:w-auto">
           <img
-            v-if="character.photo_path"
-            :src="`${apiBaseUrl}/${character.photo_path}`"
+            v-if="character.cover"
+            :src="`${apiBaseUrl}/${character.cover}`"
             alt="Item Cover"
             class="w-full max-w-md max-h-[400px] object-contain rounded-lg shadow mx-auto mb-6"
           />

@@ -8,6 +8,7 @@ class Item(Base):
     id = Column(Integer, primary_key=True, index=True)
     world_id = Column(Integer, ForeignKey('worlds.id'), nullable=False)
     name = Column(String, nullable=False)
+    tags = Column(String, nullable=True)
     cover = Column(String)
     description = Column(Text, nullable=True)
     value = Column(Integer, nullable=False)

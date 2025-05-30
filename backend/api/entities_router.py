@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Query, HTTPException
 from typing import List, Optional
-from backend.utils.db_helpers import query_all
+from backend.utils.db_helpers import query_all, query_one
 
 router = APIRouter()
 
