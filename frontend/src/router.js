@@ -47,7 +47,7 @@ const routes = [
     component: OrganizationPage,
   },
   {
-    path: '/:worldId/organizations/organizations-add',
+    path: '/:worldId/organizations/organizations/add',
     name: 'organizations-add',
     component: OrganisationsAddPage,
   },
@@ -62,7 +62,7 @@ const routes = [
     component: CharacterPage,
   },
   {
-    path: '/:worldId/characters/characters-add',
+    path: '/:worldId/characters/characters/add',
     name: 'characters-add',
     component: CharactersAddPage,
   },
@@ -72,7 +72,7 @@ const routes = [
     component: ItemPage,
   },
   {
-    path: '/:worldId/items/items-add',
+    path: '/:worldId/items/items/add',
     name: 'items-add',
     component: ItemsAddPage,
   },
@@ -82,7 +82,7 @@ const routes = [
     component: LocationPage,
   },
   {
-    path: '/:worldId/locations/locations-add',
+    path: '/:worldId/locations/locations/add',
     name: 'locations-add',
     component: LocationsAddPage,
   },

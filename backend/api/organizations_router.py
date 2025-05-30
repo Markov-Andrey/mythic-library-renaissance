@@ -122,12 +122,3 @@ def update_organization(
     execute(f"UPDATE organizations SET {fields} WHERE id = ?", (*data.values(), organization_id))
 
     return {"message": "Location updated"}
-
-
-@router.delete("/api/worlds/{world_id}/organizations/{organisation_id}")
-async def delete_location(world_id: int, organisation_id: int):
-    execute(
-        "DELETE FROM organizations WHERE world_id = ? AND id = ?",
-        (world_id, organisation_id)
-    )
-    return {"detail": "Organization deleted"}

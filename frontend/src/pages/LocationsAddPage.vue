@@ -11,7 +11,7 @@ const worldId = route.params.worldId;
 
 const fetchLocationsArray = async () => {
   try {
-    locationsArray.value = await ky.get(`${apiBaseUrl}/api/worlds/${worldId}/locations_array`).json();
+    locationsArray.value = await ky.get(`${apiBaseUrl}/api/worlds/${worldId}/locations/array`).json();
   } catch (err) {
     console.error('Error fetching locations:', err);
   }
@@ -36,7 +36,7 @@ const fields = computed(() => [
 <template>
   <AddFormElement
     :fields="fields"
-    api-route="/api/location_add"
+    api-route="/api/locations/add"
     :success-redirect="`/${worldId}/locations`"
   />
 </template>

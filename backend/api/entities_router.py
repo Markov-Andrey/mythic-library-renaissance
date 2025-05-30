@@ -1,6 +1,8 @@
-from fastapi import APIRouter, Query, HTTPException
-from typing import List, Optional
-from backend.utils.db_helpers import query_all, query_one
+import os
+import json
+from typing import Optional, List
+from fastapi import HTTPException, APIRouter, UploadFile, File, Form, Query, Request
+from backend.utils.db_helpers import query_all, query_one, save_file_sync, insert_into_table, execute
 
 router = APIRouter()
 
@@ -44,6 +46,55 @@ async def get_entities(
     return query_all(base_query, tuple(params))
 
 
+@router.post("/api/{entity}/add")
+async def add_entity(
+    entity: str,
+    request: Request,
+    cover: Optional[UploadFile] = File(None),
+    images_json: Optional[List[UploadFile]] = File(None)
+):
+    if entity not in ALLOWED_TABLES:
+        raise HTTPException(status_code=400, detail="Invalid entity")
+
+    STORAGE_DIR = f"storage/{entity}"
+    os.makedirs(STORAGE_DIR, exist_ok=True)
+
+    form = await request.form()
+    data = {}
+
+    for key, value in form.items():
+        if value == "" or value.lower() == "null":
+            data[key] = None
+        elif value.isdigit():
+            data[key] = int(value)
+        else:
+            try:
+                data[key] = float(value)
+            except ValueError:
+                if value.lower() in ("true", "false"):
+                    data[key] = value.lower() == "true"
+                else:
+                    data[key] = value
+
+    if cover:
+        data["cover"] = save_file_sync(cover, STORAGE_DIR)
+
+    if images_json:
+        saved_paths = [save_file_sync(f, STORAGE_DIR) for f in images_json]
+        data["images_json"] = json.dumps(saved_paths)
+
+    if entity == "locations" and "parent_location_id" in data:
+        try:
+            data["parent_location_id"] = int(data["parent_location_id"])
+        except (ValueError, TypeError):
+            data["parent_location_id"] = None
+
+    table = ALLOWED_TABLES[entity]
+    inserted_id = insert_into_table(table, data)
+
+    return {"message": f"{entity.capitalize()} added", "id": inserted_id}
+
+
 @router.get("/api/worlds/{world_id}/{entity}/types")
 async def get_types(world_id: int, entity: str):
     query = f"SELECT DISTINCT type FROM {entity} WHERE world_id = ?"
@@ -63,3 +114,14 @@ async def get_tags(world_id: int, entity: str):
         tags_set.update(t.strip() for t in tags if t.strip())
 
     return sorted(tags_set)
+
+
+@router.delete("/api/worlds/{world_id}/{entity}/{item_id}")
+async def delete_entity(world_id: int, entity: str, item_id: int):
+    if entity not in ALLOWED_TABLES:
+        raise HTTPException(status_code=400, detail="Invalid entity")
+
+    table = ALLOWED_TABLES[entity]
+    query = f"DELETE FROM {table} WHERE world_id = ? AND id = ?"
+    execute(query, (world_id, item_id))
+    return {"detail": f"{entity.capitalize()} deleted"}

@@ -28,30 +28,31 @@ def add_character(
     name: str = Form(...),
     description: Optional[str] = Form(None),
     type: Optional[str] = Form(None),
+    tags: Optional[str] = Form(None),
     age: Optional[int] = Form(None),
     gender: Optional[str] = Form(None),
     race: Optional[str] = Form(None),
     character_class: Optional[str] = Form(None),
-    status: Optional[bool] = Form(True),
-    photo_path: Optional[UploadFile] = File(None)
+    status: Optional[str] = Form("true"),
+    cover: Optional[UploadFile] = File(None)
 ):
     data = {
         "world_id": world_id,
         "name": name,
         "description": description,
         "type": type,
+        "tags": tags,
         "age": age,
         "gender": gender,
         "race": race,
         "character_class": character_class,
-        "status": status,
-        "photo_path": None
+        "status": status.lower() in ("true", "1", "yes"),
     }
 
-    if photo_path:
-        saved_path = save_file_sync(photo_path, STORAGE_DIR)
-        data["photo_path"] = saved_path
+    if cover:
+        saved_path = save_file_sync(cover, STORAGE_DIR)
+        data["cover"] = saved_path
 
-    insert_into_table("characters", data)
+    new_id = insert_into_table("characters", data)
 
-    return {"message": "Character added"}
+    return {"message": "Character added", "id": new_id}
