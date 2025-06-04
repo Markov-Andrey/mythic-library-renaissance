@@ -12,7 +12,7 @@ onMounted(() => {
 
 const fields = computed(() => [
   {name: 'world_id', label: 'Мир', type: 'text', hidden: true, default: worldId},
-  {name: 'photo_path', label: 'Фото', type: 'image'},
+  {name: 'cover', label: 'Фото', type: 'image'},
   {name: 'name', label: 'Имя персонажа', type: 'text', required: true},
   {name: 'description', label: 'Описание', type: 'textarea'},
   {name: 'type', label: 'Тип', type: 'text'},
