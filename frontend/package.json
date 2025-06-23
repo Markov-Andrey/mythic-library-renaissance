@@ -16,6 +16,7 @@
     "@ckeditor/ckeditor5-build-classic": "^44.3.0",
     "@tailwindcss/vite": "^4.1.4",
     "cannon-es": "^0.20.0",
+    "d3": "^7.9.0",
     "flowbite": "^3.1.2",
     "flowbite-vue": "^0.2.1",
     "ky": "^1.8.1",
